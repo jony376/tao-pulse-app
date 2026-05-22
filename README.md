@@ -1,17 +1,24 @@
-# taopulse
+# TaoPulse
+TaoPulse helps Bittensor users stay on top of subnet and network activity with AI-powered insights, alerts, and realtime ecosystem awareness.
 
-AI-powered realtime Bittensor intelligence platform.
+# Features
 
-## Getting Started
+# Why TaoPulse
 
-This project is a starting point for a Flutter application.
+The [Bittensor](https://bittensor.com) ecosystem moves fast.
+Subnet emissions change unexpectedly.  
+Validators shift weights.  
+Whales move stake.  
+Important GitHub releases quietly affect network behavior.  
+Critical updates get scattered across dashboards, Discord, Telegram, GitHub, CLI tools, and social feeds.
 
-A few resources to get you started if this is your first Flutter project:
+By the time many users notice what changed, the network has already moved.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+TaoPulse exists to simplify ecosystem awareness.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Instead of manually tracking fragmented sources, TaoPulse helps users instantly understand:
+- what changed
+- why it matters
+- what deserves attention
+
+through realtime feeds, intelligent alerts, and AI-powered explanations - built mobile-first for the Bittensor ecosystem.
