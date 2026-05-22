@@ -1,0 +1,650 @@
+import 'package:flutter/material.dart';
+
+import '../../../core/theme/theme.dart';
+import '../../../shared/widgets/app_top_bar.dart';
+
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
+  static const _stats = <_SettingsStat>[
+    _SettingsStat(
+      value: '8',
+      label: 'Watching\nentities',
+      icon: Icons.star_rounded,
+      color: AppColors.aiPurple,
+    ),
+    _SettingsStat(
+      value: '12',
+      label: 'Alerts\nenabled',
+      icon: Icons.notifications_rounded,
+      color: AppColors.info,
+    ),
+    _SettingsStat(
+      value: '64',
+      label: 'AI conversations\nthis month',
+      icon: Icons.chat_bubble_rounded,
+      color: AppColors.success,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        toolbarHeight: 72,
+        titleSpacing: AppSpacing.md,
+        title: const AppTopBar(
+          title: 'Settings',
+          showSearch: false,
+        ),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(
+          4,
+          AppSpacing.md,
+          4,
+          108,
+        ),
+        children: [
+          _ProfileSummaryCard(stats: _stats),
+          const SizedBox(height: AppSpacing.lg),
+          const _PrimarySettingsCard(
+            title: 'Watching',
+            description:
+                'Manage watched subnets, validators,\nwallets and miners.',
+            icon: Icons.visibility_outlined,
+            iconColor: AppColors.aiPurple,
+            trailingText: '+5',
+            compact: true,
+            avatarColors: [
+              AppColors.success,
+              AppColors.info,
+              AppColors.aiPurple,
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          const _PrimarySettingsCard(
+            title: 'Notification Settings',
+            description:
+                'Control what alerts you get\nand how you receive them.',
+            icon: Icons.notifications_none_rounded,
+            iconColor: AppColors.success,
+            trailingText: '5 categories on',
+            trailingColor: AppColors.success,
+            compact: true,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          const _PrimarySettingsCard(
+            title: 'AI Preferences',
+            description:
+                'Customize how Ask AI responds\nand behaves.',
+            icon: Icons.auto_awesome_outlined,
+            iconColor: AppColors.aiPurple,
+            trailingText: 'Balanced',
+            trailingColor: AppColors.aiPurple,
+            compact: true,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          const _PrimarySettingsCard(
+            title: 'Appearance',
+            description: 'Choose your preferred theme\nand app appearance.',
+            icon: Icons.dark_mode_outlined,
+            iconColor: Color(0xFFE86BD8),
+            trailingText: 'Dark',
+            trailingColor: AppColors.aiPurple,
+            compact: true,
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          const _GroupedUtilityCard(),
+          const SizedBox(height: AppSpacing.lg),
+          const _LogoutCard(),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProfileSummaryCard extends StatelessWidget {
+  const _ProfileSummaryCard({required this.stats});
+
+  final List<_SettingsStat> stats;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceCard.withValues(alpha: 0.96),
+        borderRadius: BorderRadius.circular(AppRadius.modal),
+        border: Border.all(color: AppColors.borderSubtle),
+      ),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 76,
+                height: 76,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF36205F), Color(0xFF1E2232)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: AppColors.aiPurple.withValues(alpha: 0.9),
+                    width: 2,
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    'CL',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Steve Jobs',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.headlineMedium?.copyWith(
+                              fontSize: 22,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              FilledButton.tonal(
+                onPressed: () {},
+                style: FilledButton.styleFrom(
+                  backgroundColor: Colors.white.withValues(alpha: 0.06),
+                  foregroundColor: AppColors.textPrimary,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                    vertical: AppSpacing.sm,
+                  ),
+                  minimumSize: const Size(0, 36),
+                ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.edit_outlined, size: 16),
+                    SizedBox(width: AppSpacing.sm),
+                    Text(
+                      'Edit Profile',
+                      style: TextStyle(fontSize: 13),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.03),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(color: AppColors.borderSubtle),
+            ),
+            child: Row(
+              children: stats
+                  .map(
+                    (stat) => Expanded(
+                      child: _StatTile(
+                        stat: stat,
+                        showDivider: stat != stats.last,
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatTile extends StatelessWidget {
+  const _StatTile({
+    required this.stat,
+    required this.showDivider,
+  });
+
+  final _SettingsStat stat;
+  final bool showDivider;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: showDivider
+            ? const Border(
+                right: BorderSide(color: AppColors.borderSubtle),
+              )
+            : null,
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 34,
+                height: 34,
+                decoration: BoxDecoration(
+                  color: stat.color.withValues(alpha: 0.16),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(stat.icon, color: stat.color, size: 18),
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      stat.value,
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(
+                            fontSize: 18,
+                          ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      stat.label,
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                        height: 1.35,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PrimarySettingsCard extends StatelessWidget {
+  const _PrimarySettingsCard({
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.iconColor,
+    this.trailingText,
+    this.trailingColor,
+    this.avatarColors = const [],
+    this.compact = false,
+  });
+
+  final String title;
+  final String description;
+  final IconData icon;
+  final Color iconColor;
+  final String? trailingText;
+  final Color? trailingColor;
+  final List<Color> avatarColors;
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: EdgeInsets.all(compact ? AppSpacing.md : AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceCard.withValues(alpha: 0.96),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: AppColors.borderSubtle),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: compact ? 44 : 56,
+            height: compact ? 44 : 56,
+            decoration: BoxDecoration(
+              color: iconColor.withValues(alpha: 0.16),
+              borderRadius: BorderRadius.circular(AppRadius.smallCard),
+            ),
+            child: Icon(icon, color: iconColor, size: compact ? 22 : 28),
+          ),
+          SizedBox(width: compact ? AppSpacing.md : AppSpacing.lg),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontSize: compact ? 18 : 20,
+                  ),
+                ),
+                SizedBox(height: compact ? AppSpacing.xs : AppSpacing.sm),
+                Text(
+                  description,
+                  maxLines: compact ? 2 : null,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: AppColors.textSecondary,
+                    height: 1.3,
+                    fontSize: compact ? 12 : null,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.md),
+          _SettingsCardTrailing(
+            text: trailingText,
+            textColor: trailingColor,
+            avatarColors: avatarColors,
+            compact: compact,
+          ),
+          SizedBox(width: compact ? AppSpacing.sm : AppSpacing.md),
+          Icon(
+            Icons.chevron_right,
+            color: AppColors.textSecondary,
+            size: compact ? 22 : 28,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _GroupedUtilityCard extends StatelessWidget {
+  const _GroupedUtilityCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.surfaceCard.withValues(alpha: 0.96),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: AppColors.borderSubtle),
+      ),
+      child: Column(
+        children: const [
+          _UtilityRow(
+            icon: Icons.verified_user_outlined,
+            title: 'Data & Privacy',
+          ),
+          _UtilityRow(
+            icon: Icons.help_outline,
+            title: 'Help & Support',
+          ),
+          _UtilityRow(
+            icon: Icons.info_outline,
+            title: 'About TaoPulse',
+            trailingText: 'v1.0.0',
+            showDivider: false,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _UtilityRow extends StatelessWidget {
+  const _UtilityRow({
+    required this.icon,
+    required this.title,
+    this.trailingText,
+    this.showDivider = true,
+  });
+
+  final IconData icon;
+  final String title;
+  final String? trailingText;
+  final bool showDivider;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.lg,
+      ),
+      decoration: BoxDecoration(
+        border: showDivider
+            ? const Border(
+                bottom: BorderSide(color: AppColors.borderSubtle),
+              )
+            : null,
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: AppColors.textSecondary, size: 22),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontSize: 18,
+                color: AppColors.textPrimary,
+              ),
+            ),
+          ),
+          if (trailingText != null)
+            Padding(
+              padding: const EdgeInsets.only(right: AppSpacing.sm),
+              child: Text(
+                trailingText!,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ),
+          const Icon(
+            Icons.chevron_right,
+            color: AppColors.textSecondary,
+            size: 24,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LogoutCard extends StatelessWidget {
+  const _LogoutCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceCard.withValues(alpha: 0.96),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: AppColors.borderSubtle),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: AppColors.critical.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(AppRadius.button),
+            ),
+            child: const Icon(
+              Icons.logout_rounded,
+              color: AppColors.critical,
+              size: 24,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Text(
+              'Log Out',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: AppColors.critical,
+                fontSize: 18,
+              ),
+            ),
+          ),
+          const Icon(
+            Icons.chevron_right,
+            color: AppColors.textSecondary,
+            size: 24,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SettingsCardTrailing extends StatelessWidget {
+  const _SettingsCardTrailing({
+    this.text,
+    this.textColor,
+    this.avatarColors = const [],
+    this.compact = false,
+  });
+
+  final String? text;
+  final Color? textColor;
+  final List<Color> avatarColors;
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) {
+    if (avatarColors.isNotEmpty) {
+      final overlapCount = avatarColors.length;
+      final avatarSize = compact ? 22.0 : 34.0;
+      final overlapOffset = compact ? 14.0 : 28.0;
+      final avatarStripWidth = compact
+          ? avatarSize + (overlapOffset * (overlapCount - 1))
+          : null;
+
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (compact)
+            SizedBox(
+              width: avatarStripWidth,
+              height: avatarSize,
+              child: Stack(
+                children: [
+                  for (var i = 0; i < avatarColors.length; i++)
+                    Positioned(
+                      left: overlapOffset * i,
+                      child: Container(
+                        width: avatarSize,
+                        height: avatarSize,
+                        decoration: BoxDecoration(
+                          color: avatarColors[i].withValues(alpha: 0.18),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: AppColors.surfaceCard,
+                            width: 1.2,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          if (!compact)
+            ...avatarColors.map(
+              (color) => Padding(
+                padding: const EdgeInsets.only(right: 6),
+                child: Container(
+                  width: 34,
+                  height: 34,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.18),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ),
+          SizedBox(width: compact ? AppSpacing.xs : 0),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: compact ? AppSpacing.xs : AppSpacing.md,
+              vertical: compact ? 4 : AppSpacing.sm,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+            ),
+            child: Text(
+              text ?? '',
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: AppColors.textPrimary,
+                fontSize: compact ? 11 : null,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    if (text == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: BoxDecoration(
+        color: (textColor ?? AppColors.textPrimary).withValues(alpha: 0.14),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+      ),
+      child: Text(
+        text!,
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+          color: textColor ?? AppColors.textPrimary,
+        ),
+      ),
+    );
+  }
+}
+
+class _SettingsStat {
+  const _SettingsStat({
+    required this.value,
+    required this.label,
+    required this.icon,
+    required this.color,
+  });
+
+  final String value;
+  final String label;
+  final IconData icon;
+  final Color color;
+}
