@@ -1,57 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/theme.dart';
 import '../../../shared/widgets/app_top_bar.dart';
+import '../data/alerts_repository.dart';
 
-class AlertsScreen extends StatelessWidget {
+class AlertsScreen extends ConsumerStatefulWidget {
   const AlertsScreen({super.key});
 
-  static const _alerts = <_AlertItem>[
-    _AlertItem(
-      category: 'Large Stake Movement',
-      title: '18,420 TAO moved into Subnet 8',
-      description: 'Large wallet tao1q...x7k9 staked 18,420 TAO into Subnet 8 (Compute).',
-      timeAgo: '12m ago',
-      severity: 'Critical',
-      color: AppColors.critical,
-      icon: Icons.savings_outlined,
-      primaryAction: 'View',
-    ),
-    _AlertItem(
-      category: 'Subnet Emission Spike',
-      title: 'Subnet 19 emissions increased 4.2%',
-      description: 'Emission rate is higher than usual in the last 12 hours.',
-      timeAgo: '38m ago',
-      severity: 'High',
-      color: AppColors.warning,
-      icon: Icons.bar_chart_rounded,
-      primaryAction: 'View Subnet',
-    ),
-    _AlertItem(
-      category: 'Validator Rotation',
-      title: '3 validators changed weights on Subnet 19',
-      description: 'Weight distribution changed significantly in the last 60 minutes.',
-      timeAgo: '1h ago',
-      severity: 'Medium',
-      color: AppColors.info,
-      icon: Icons.groups_outlined,
-      primaryAction: 'Open Feed',
-    ),
-    _AlertItem(
-      category: 'Deregistration Risk',
-      title: 'Miner 5F3a...9d2f at risk of deregistration',
-      description: 'Rank dropped to #256 on Subnet 15. Take action soon.',
-      timeAgo: '2h ago',
-      severity: 'High',
-      color: AppColors.success,
-      icon: Icons.shield_outlined,
-      primaryAction: 'View Miner',
-    ),
-  ];
+  @override
+  ConsumerState<AlertsScreen> createState() => _AlertsScreenState();
+}
+
+class _AlertsScreenState extends ConsumerState<AlertsScreen> {
+  static const _filters = ['All', 'Unread', 'Critical', 'Watchlist'];
+  String _selectedFilter = 'All';
 
   @override
   Widget build(BuildContext context) {
+    final alertsAsync = ref.watch(alertsProvider(_selectedFilter));
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -71,43 +40,44 @@ class AlertsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(
-              4,
-              AppSpacing.md,
-              4,
-              AppSpacing.md,
-            ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, AppSpacing.md, 4, AppSpacing.md),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  _AlertFilterChip(label: 'All', selected: true),
-                  SizedBox(width: AppSpacing.md),
-                  _AlertFilterChip(label: 'Unread'),
-                  SizedBox(width: AppSpacing.md),
-                  _AlertFilterChip(label: 'Critical'),
-                ],
+                children: _filters
+                    .map(
+                      (filter) => Padding(
+                        padding: EdgeInsets.only(right: filter == _filters.last ? 0 : AppSpacing.md),
+                        child: _AlertFilterChip(
+                          label: filter,
+                          selected: filter == _selectedFilter,
+                          onTap: () => setState(() => _selectedFilter = filter),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.fromLTRB(
-                4,
-                0,
-                4,
-                108,
+            child: alertsAsync.when(
+              data: (alerts) => ListView.separated(
+                padding: const EdgeInsets.fromLTRB(4, 0, 4, 108),
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return const _SectionLabel(label: 'TODAY');
+                  }
+                  return _AlertCard(item: alerts[index - 1]);
+                },
+                separatorBuilder: (context, index) =>
+                    SizedBox(height: index == 0 ? AppSpacing.md : AppSpacing.sm),
+                itemCount: alerts.length + 1,
               ),
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return const _SectionLabel(label: 'TODAY');
-                }
-                return _AlertCard(item: _alerts[index - 1]);
-              },
-              separatorBuilder: (context, index) =>
-                  SizedBox(height: index == 0 ? AppSpacing.md : AppSpacing.sm),
-              itemCount: _alerts.length + 1,
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stackTrace) => Center(
+                child: Text('Failed to load alerts: $error'),
+              ),
             ),
           ),
         ],
@@ -119,27 +89,36 @@ class AlertsScreen extends StatelessWidget {
 class _AlertFilterChip extends StatelessWidget {
   const _AlertFilterChip({
     required this.label,
-    this.selected = false,
+    required this.selected,
+    required this.onTap,
   });
 
   final String label;
   final bool selected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      decoration: BoxDecoration(
-        color: selected
-            ? AppColors.aiPurple.withValues(alpha: 0.95)
-            : AppColors.surfaceSecondary,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.button),
-        border: Border.all(color: AppColors.borderSubtle),
-      ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-          color: AppColors.textPrimary,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          decoration: BoxDecoration(
+            color: selected
+                ? AppColors.aiPurple.withValues(alpha: 0.95)
+                : AppColors.surfaceSecondary,
+            borderRadius: BorderRadius.circular(AppRadius.button),
+            border: Border.all(color: AppColors.borderSubtle),
+          ),
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: AppColors.textPrimary,
+                ),
+          ),
         ),
       ),
     );
@@ -156,9 +135,9 @@ class _SectionLabel extends StatelessWidget {
     return Text(
       label,
       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-        color: AppColors.textSecondary,
-        letterSpacing: 0.6,
-      ),
+            color: AppColors.textSecondary,
+            letterSpacing: 0.6,
+          ),
     );
   }
 }
@@ -166,11 +145,13 @@ class _SectionLabel extends StatelessWidget {
 class _AlertCard extends StatelessWidget {
   const _AlertCard({required this.item});
 
-  final _AlertItem item;
+  final AlertItem item;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final color = _colorForSeverity(item.severity);
+    final icon = _iconForCategory(item.category);
     final severityStyle = _severityStyle(item.severity);
 
     return Container(
@@ -187,10 +168,10 @@ class _AlertCard extends StatelessWidget {
             width: 52,
             height: 52,
             decoration: BoxDecoration(
-              color: item.color.withValues(alpha: 0.18),
+              color: color.withValues(alpha: 0.18),
               borderRadius: BorderRadius.circular(AppRadius.smallCard),
             ),
-            child: Icon(item.icon, color: item.color, size: 26),
+            child: Icon(icon, color: color, size: 26),
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
@@ -202,9 +183,7 @@ class _AlertCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         item.category,
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontSize: 16,
-                        ),
+                        style: theme.textTheme.titleLarge?.copyWith(fontSize: 16),
                       ),
                     ),
                     Container(
@@ -218,35 +197,30 @@ class _AlertCard extends StatelessWidget {
                       ),
                       child: Text(
                         item.severity.toUpperCase(),
-                        style: theme.textTheme.labelMedium?.copyWith(
-                          color: severityStyle.$1,
-                        ),
+                        style: theme.textTheme.labelMedium?.copyWith(color: severityStyle.$1),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     Text(
                       item.timeAgo,
                       style: theme.textTheme.labelMedium?.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+                            color: AppColors.textSecondary,
+                          ),
                     ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   item.title,
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    fontSize: 20,
-                    height: 1.2,
-                  ),
+                  style: theme.textTheme.headlineMedium?.copyWith(fontSize: 20, height: 1.2),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   item.description,
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: AppColors.textSecondary,
-                    height: 1.35,
-                  ),
+                        color: AppColors.textSecondary,
+                        height: 1.35,
+                      ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Row(
@@ -256,10 +230,6 @@ class _AlertCard extends StatelessWidget {
                       style: FilledButton.styleFrom(
                         backgroundColor: AppColors.aiPurple.withValues(alpha: 0.18),
                         foregroundColor: AppColors.aiPurple,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.lg,
-                          vertical: AppSpacing.sm,
-                        ),
                       ),
                       child: const Text('Ask AI'),
                     ),
@@ -269,17 +239,8 @@ class _AlertCard extends StatelessWidget {
                       style: FilledButton.styleFrom(
                         backgroundColor: Colors.white.withValues(alpha: 0.06),
                         foregroundColor: AppColors.textPrimary,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.lg,
-                          vertical: AppSpacing.sm,
-                        ),
                       ),
                       child: Text(item.primaryAction),
-                    ),
-                    const Spacer(),
-                    Icon(
-                      Icons.bookmark_border,
-                      color: AppColors.textSecondary.withValues(alpha: 0.95),
                     ),
                   ],
                 ),
@@ -289,6 +250,34 @@ class _AlertCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  IconData _iconForCategory(String category) {
+    switch (category) {
+      case 'Large Stake Movement':
+        return Icons.savings_outlined;
+      case 'Subnet Emission Spike':
+        return Icons.bar_chart_rounded;
+      case 'Validator Rotation':
+        return Icons.groups_outlined;
+      case 'Deregistration Risk':
+        return Icons.shield_outlined;
+      default:
+        return Icons.notifications_outlined;
+    }
+  }
+
+  Color _colorForSeverity(String severity) {
+    switch (severity) {
+      case 'Critical':
+        return AppColors.critical;
+      case 'High':
+        return AppColors.warning;
+      case 'Medium':
+        return AppColors.info;
+      default:
+        return AppColors.textSecondary;
+    }
   }
 
   (Color, Color) _severityStyle(String severity) {
@@ -303,26 +292,4 @@ class _AlertCard extends StatelessWidget {
         return (AppColors.textSecondary, Colors.white10);
     }
   }
-}
-
-class _AlertItem {
-  const _AlertItem({
-    required this.category,
-    required this.title,
-    required this.description,
-    required this.timeAgo,
-    required this.severity,
-    required this.color,
-    required this.icon,
-    required this.primaryAction,
-  });
-
-  final String category;
-  final String title;
-  final String description;
-  final String timeAgo;
-  final String severity;
-  final Color color;
-  final IconData icon;
-  final String primaryAction;
 }

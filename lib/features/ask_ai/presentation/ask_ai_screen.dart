@@ -1,61 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/theme.dart';
 import '../../../shared/widgets/app_top_bar.dart';
+import '../data/ask_ai_repository.dart';
 
-class AskAiScreen extends StatelessWidget {
+class AskAiScreen extends ConsumerWidget {
   const AskAiScreen({super.key});
 
-  static const _suggestedPrompts = <_PromptCardData>[
-    _PromptCardData(
-      title: 'Why is subnet 19 moving today?',
-      subtitle: 'Explain the recent emission and stake changes',
-      icon: Icons.trending_up,
-      color: AppColors.aiPurple,
-    ),
-    _PromptCardData(
-      title: 'Summarize today\'s ecosystem activity',
-      subtitle: 'What are the most important events?',
-      icon: Icons.article_outlined,
-      color: Color(0xFF18E7C5),
-    ),
-    _PromptCardData(
-      title: 'Which validators changed weights?',
-      subtitle: 'Show recent validator weight shifts',
-      icon: Icons.groups_outlined,
-      color: Color(0xFFFFA055),
-    ),
-    _PromptCardData(
-      title: 'Any unusual TAO stake movement?',
-      subtitle: 'Detect large wallet transfers and flows',
-      icon: Icons.account_balance_wallet_outlined,
-      color: AppColors.aiPurple,
-    ),
-  ];
-
-  static const _recentConversations = <_RecentConversationData>[
-    _RecentConversationData(
-      title: 'Subnet 19 analysis',
-      timeAgo: '2 min ago',
-      icon: Icons.trending_up,
-      color: AppColors.aiPurple,
-    ),
-    _RecentConversationData(
-      title: 'Validator rotation',
-      timeAgo: '1 hr ago',
-      icon: Icons.groups_outlined,
-      color: AppColors.success,
-    ),
-    _RecentConversationData(
-      title: 'Wallet 5F...a3d',
-      timeAgo: '3 hr ago',
-      icon: Icons.account_balance_wallet_outlined,
-      color: AppColors.info,
-    ),
-  ];
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dashboardAsync = ref.watch(askAiDashboardProvider);
     final bottomInset = MediaQuery.paddingOf(context).bottom;
 
     return Scaffold(
@@ -63,64 +18,150 @@ class AskAiScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         toolbarHeight: 72,
         titleSpacing: AppSpacing.md,
-        title: const AppTopBar(
-          title: 'Ask AI',
-          showSearch: false,
-        ),
+        title: const AppTopBar(title: 'Ask AI', showSearch: false),
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          4,
-          AppSpacing.md,
-          4,
-          12 + bottomInset,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const _AskAiHero(),
-            const SizedBox(height: AppSpacing.xxl),
-            _SectionHeader(
-              title: 'Suggested questions',
-            ),
-            const SizedBox(height: AppSpacing.md),
-            SizedBox(
-              height: 214,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: _suggestedPrompts.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(width: AppSpacing.md),
-                itemBuilder: (context, index) => SizedBox(
-                  width: 210,
-                  child: _PromptCard(data: _suggestedPrompts[index]),
-                ),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            _SectionHeader(
-              title: 'Recent conversations',
-              actionLabel: 'View all',
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            SizedBox(
-              height: 88,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: _recentConversations.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(width: AppSpacing.md),
-                itemBuilder: (context, index) => SizedBox(
-                  width: 170,
-                  child: _RecentConversationCard(
-                    data: _recentConversations[index],
+      body: dashboardAsync.when(
+        data: (dashboard) => Padding(
+          padding: EdgeInsets.fromLTRB(4, AppSpacing.md, 4, 12 + bottomInset),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const _AskAiHero(),
+              const SizedBox(height: AppSpacing.xxl),
+              const _SectionHeader(title: 'Suggested questions'),
+              const SizedBox(height: AppSpacing.md),
+              SizedBox(
+                height: 214,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: dashboard.suggestions.length,
+                  separatorBuilder: (context, index) => const SizedBox(width: AppSpacing.md),
+                  itemBuilder: (context, index) => SizedBox(
+                    width: 210,
+                    child: _PromptCard(
+                      data: dashboard.suggestions[index],
+                      onTap: () => _openChatReply(
+                        context,
+                        ref,
+                        dashboard.suggestions[index].title,
+                      ),
+                    ),
                   ),
                 ),
               ),
+              const SizedBox(height: AppSpacing.lg),
+              const _SectionHeader(title: 'Recent conversations', actionLabel: 'Live'),
+              const SizedBox(height: AppSpacing.sm),
+              SizedBox(
+                height: 88,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: dashboard.history.length,
+                  separatorBuilder: (context, index) => const SizedBox(width: AppSpacing.md),
+                  itemBuilder: (context, index) => SizedBox(
+                    width: 170,
+                    child: _RecentConversationCard(data: dashboard.history[index]),
+                  ),
+                ),
+              ),
+              const Spacer(),
+              const SizedBox(height: AppSpacing.md),
+              _AskAiComposer(
+                onSubmit: () => _openPromptDialog(context, ref),
+              ),
+            ],
+          ),
+        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) => Center(
+          child: Text('Failed to load Ask AI: $error'),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _openPromptDialog(BuildContext context, WidgetRef ref) async {
+    final controller = TextEditingController();
+    final prompt = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.surfaceCard,
+        title: const Text('Ask TaoPulse AI'),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          maxLines: 3,
+          decoration: const InputDecoration(
+            hintText: 'Ask about subnets, validators, stake movement...',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(controller.text.trim()),
+            child: const Text('Send'),
+          ),
+        ],
+      ),
+    );
+
+    if (prompt == null || prompt.isEmpty || !context.mounted) {
+      return;
+    }
+    await _openChatReply(context, ref, prompt);
+  }
+
+  Future<void> _openChatReply(BuildContext context, WidgetRef ref, String message) async {
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.showSnackBar(
+      const SnackBar(content: Text('Sending message to TaoPulse AI...')),
+    );
+
+    final reply = await ref.read(askAiRepositoryProvider).sendMessage(message);
+    if (!context.mounted) {
+      return;
+    }
+    messenger.hideCurrentSnackBar();
+
+    await showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: AppColors.surfaceCard,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg,
+          AppSpacing.lg,
+          AppSpacing.lg,
+          AppSpacing.xxl,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              message,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
             ),
-            const Spacer(),
             const SizedBox(height: AppSpacing.md),
-            const _AskAiComposer(),
+            Text(
+              reply.content,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppColors.textSecondary,
+                    height: 1.45,
+                  ),
+            ),
+            if (reply.sources.isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.lg),
+              Text(
+                'Sources: ${reply.sources.join(', ')}',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+              ),
+            ],
           ],
         ),
       ),
@@ -141,10 +182,7 @@ class _AskAiHero extends StatelessWidget {
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              style: theme.textTheme.displaySmall?.copyWith(
-                fontSize: 22,
-                height: 1.15,
-              ),
+              style: theme.textTheme.displaySmall?.copyWith(fontSize: 22, height: 1.15),
               children: const [
                 TextSpan(text: 'How can I help you\n'),
                 TextSpan(
@@ -165,10 +203,10 @@ class _AskAiHero extends StatelessWidget {
             child: Text(
               'Ask anything about subnets, validators, stake, emissions, or ecosystem activity.',
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColors.textSecondary,
-                fontSize: 15,
-                height: 1.3,
-              ),
+                    color: AppColors.textSecondary,
+                    fontSize: 15,
+                    height: 1.3,
+                  ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -189,8 +227,6 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Row(
       children: [
         Icon(
@@ -202,15 +238,15 @@ class _SectionHeader extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: theme.textTheme.titleLarge?.copyWith(fontSize: 18),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
           ),
         ),
         if (actionLabel != null)
           Text(
             actionLabel!,
-            style: theme.textTheme.labelLarge?.copyWith(
-              color: AppColors.aiPurple,
-            ),
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: AppColors.aiPurple,
+                ),
           ),
       ],
     );
@@ -218,70 +254,106 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _PromptCard extends StatelessWidget {
-  const _PromptCard({required this.data});
+  const _PromptCard({
+    required this.data,
+    required this.onTap,
+  });
 
-  final _PromptCardData data;
+  final AskAiPrompt data;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final accent = _accentColor(data.topic);
+    final icon = _iconForTopic(data.topic);
 
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceCard.withValues(alpha: 0.94),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: AppColors.borderSubtle),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
+        child: Container(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          decoration: BoxDecoration(
+            color: AppColors.surfaceCard.withValues(alpha: 0.94),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(color: AppColors.borderSubtle),
+          ),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 42,
-                height: 42,
-                decoration: BoxDecoration(
-                  color: data.color.withValues(alpha: 0.16),
-                  borderRadius: BorderRadius.circular(AppRadius.smallCard),
-                ),
-                child: Icon(data.icon, color: data.color, size: 21),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: accent.withValues(alpha: 0.16),
+                      borderRadius: BorderRadius.circular(AppRadius.smallCard),
+                    ),
+                    child: Icon(icon, color: accent, size: 21),
+                  ),
+                  const Spacer(),
+                  const Icon(
+                    Icons.arrow_forward,
+                    color: AppColors.textSecondary,
+                    size: 22,
+                  ),
+                ],
               ),
-              const Spacer(),
-              const Icon(
-                Icons.arrow_forward,
-                color: AppColors.textSecondary,
-                size: 22,
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                data.title,
+                style: theme.textTheme.titleLarge?.copyWith(fontSize: 15, height: 1.15),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                data.subtitle,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.textSecondary,
+                      fontSize: 14,
+                      height: 1.25,
+                    ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            data.title,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontSize: 15,
-              height: 1.15,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            data.subtitle,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: AppColors.textSecondary,
-              fontSize: 14,
-              height: 1.25,
-            ),
-          ),
-        ],
+        ),
       ),
     );
+  }
+
+  Color _accentColor(String topic) {
+    switch (topic) {
+      case 'daily_briefing':
+        return const Color(0xFF18E7C5);
+      case 'validator_analysis':
+        return const Color(0xFFFFA055);
+      default:
+        return AppColors.aiPurple;
+    }
+  }
+
+  IconData _iconForTopic(String topic) {
+    switch (topic) {
+      case 'daily_briefing':
+        return Icons.article_outlined;
+      case 'validator_analysis':
+        return Icons.groups_outlined;
+      case 'stake_analysis':
+        return Icons.account_balance_wallet_outlined;
+      default:
+        return Icons.trending_up;
+    }
   }
 }
 
 class _AskAiComposer extends StatelessWidget {
-  const _AskAiComposer();
+  const _AskAiComposer({required this.onSubmit});
+
+  final VoidCallback onSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -291,11 +363,7 @@ class _AskAiComposer extends StatelessWidget {
       padding: const EdgeInsets.all(1.2),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [
-            Color(0x667B5CFF),
-            Color(0x55A855F7),
-            Color(0x334F8CFF),
-          ],
+          colors: [Color(0x667B5CFF), Color(0x55A855F7), Color(0x334F8CFF)],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
@@ -319,22 +387,21 @@ class _AskAiComposer extends StatelessWidget {
               child: Text(
                 'Ask anything about Bittensor...',
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.textSecondary,
-                  fontSize: 15,
-                ),
+                      color: AppColors.textSecondary,
+                      fontSize: 15,
+                    ),
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
-            const Icon(
-              Icons.mic_none,
-              color: AppColors.textPrimary,
-              size: 24,
-            ),
+            const Icon(Icons.mic_none, color: AppColors.textPrimary, size: 24),
             const SizedBox(width: AppSpacing.md),
-            const _ComposerCircleButton(
-              icon: Icons.arrow_upward,
-              backgroundColor: AppColors.aiPurple,
-              iconColor: AppColors.textPrimary,
+            GestureDetector(
+              onTap: onSubmit,
+              child: const _ComposerCircleButton(
+                icon: Icons.arrow_upward,
+                backgroundColor: AppColors.aiPurple,
+                iconColor: AppColors.textPrimary,
+              ),
             ),
           ],
         ),
@@ -346,12 +413,10 @@ class _AskAiComposer extends StatelessWidget {
 class _RecentConversationCard extends StatelessWidget {
   const _RecentConversationCard({required this.data});
 
-  final _RecentConversationData data;
+  final ChatHistoryItem data;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
@@ -365,10 +430,10 @@ class _RecentConversationCard extends StatelessWidget {
             width: 38,
             height: 38,
             decoration: BoxDecoration(
-              color: data.color.withValues(alpha: 0.16),
+              color: AppColors.aiPurple.withValues(alpha: 0.16),
               borderRadius: BorderRadius.circular(AppRadius.button),
             ),
-            child: Icon(data.icon, color: data.color, size: 18),
+            child: const Icon(Icons.chat_bubble_outline, color: AppColors.aiPurple, size: 18),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
@@ -380,26 +445,22 @@ class _RecentConversationCard extends StatelessWidget {
                   data.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.labelLarge?.copyWith(
-                    color: AppColors.textPrimary,
-                    fontSize: 13,
-                  ),
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: AppColors.textPrimary,
+                        fontSize: 13,
+                      ),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   data.timeAgo,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
                 ),
               ],
             ),
           ),
-          const Icon(
-            Icons.chevron_right,
-            color: AppColors.textSecondary,
-            size: 18,
-          ),
+          const Icon(Icons.chevron_right, color: AppColors.textSecondary, size: 18),
         ],
       ),
     );
@@ -422,39 +483,8 @@ class _ComposerCircleButton extends StatelessWidget {
     return Container(
       width: 42,
       height: 42,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: backgroundColor, shape: BoxShape.circle),
       child: Icon(icon, color: iconColor, size: 22),
     );
   }
-}
-
-class _PromptCardData {
-  const _PromptCardData({
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    required this.color,
-  });
-
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final Color color;
-}
-
-class _RecentConversationData {
-  const _RecentConversationData({
-    required this.title,
-    required this.timeAgo,
-    required this.icon,
-    required this.color,
-  });
-
-  final String title;
-  final String timeAgo;
-  final IconData icon;
-  final Color color;
 }
