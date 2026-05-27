@@ -119,8 +119,8 @@ class ApiClient {
   static String _resolveBaseUrl() {
     const configuredBaseUrl = String.fromEnvironment(
       'API_BASE_URL',
-      defaultValue: '',
-      // defaultValue: 'https://icodex.space',
+      // defaultValue: '',
+      defaultValue: 'https://icodex.space',
     );
     if (configuredBaseUrl.isNotEmpty) {
       return configuredBaseUrl;
