@@ -5,60 +5,60 @@ TaoPulse is an AI-powered mobile app for Bittensor that provides timely, relevan
 
 <table style="border-bottom: 1px solid #30363d; border-collapse: collapse;">
   <tr>
-    <td width="50%" style="padding: 20px; border-right: 1px solid #30363d;">
+    <td width="32%" style="padding: 20px; border-right: 1px solid #30363d;">
       <h3>Live Feed</h3>
       An AI-backed live feed that surfaces the most relevant Bittensor signals for your interests, whether you are evaluating subnets, staking, or mining.
     </td>
-    <td width="50%" style="padding: 20px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
+    <td width="68%" style="padding: 20px;">
+      <div style="display: flex; gap: 12px; align-items: flex-start; justify-content: center;">
         <img src="screenshots/live_feed.png" alt="Live Feed" height="600" />
         <img src="screenshots/live_feed2.png" alt="Live Feed detail" height="600" />
       </div>
     </td>
   </tr>
   <tr>
-    <td width="50%" style="padding: 20px; border-right: 1px solid #30363d;">
+    <td width="32%" style="padding: 20px; border-right: 1px solid #30363d;">
       <h3>Subnets</h3>
       Helps users understand, compare, and follow Bittensor subnets with concise descriptions, key metrics, and deeper context.
     </td>
-    <td width="50%" style="padding: 20px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
+    <td width="68%" style="padding: 20px;">
+      <div style="display: flex; gap: 12px; align-items: flex-start; justify-content: center;">
         <img src="screenshots/subnets.png" alt="Subnets" height="600" />
         <img src="screenshots/subnets2.png" alt="Subnets detail" height="600" />
       </div>
     </td>
   </tr>
   <tr>
-    <td width="50%" style="padding: 20px; border-right: 1px solid #30363d;">
+    <td width="32%" style="padding: 20px; border-right: 1px solid #30363d;">
       <h3>Ask AI</h3>
       Helps users understand Bittensor activity through plain-language questions and concise AI explanations.
     </td>
-    <td width="50%" style="padding: 20px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
+    <td width="68%" style="padding: 20px;">
+      <div style="display: flex; gap: 12px; align-items: flex-start; justify-content: center;">
         <img src="screenshots/ask_ai.png" alt="Ask AI" height="600" />
         <img src="screenshots/ask_ak2.png" alt="Ask AI detail" height="600" />
       </div>
     </td>
   </tr>
   <tr>
-    <td width="50%" style="padding: 20px; border-right: 1px solid #30363d;">
+    <td width="32%" style="padding: 20px; border-right: 1px solid #30363d;">
       <h3>Alerts</h3>
       Helps users stay on top of important subnet events and control which activity triggers notifications.
     </td>
-    <td width="50%" style="padding: 20px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
+    <td width="68%" style="padding: 20px;">
+      <div style="display: flex; gap: 12px; align-items: flex-start; justify-content: center;">
         <img src="screenshots/alerts.png" alt="Alerts" height="600" />
         <img src="screenshots/alerts2.png" alt="Alerts detail" height="600" />
       </div>
     </td>
   </tr>
   <tr>
-    <td width="50%" style="padding: 20px; border-right: 1px solid #30363d;">
+    <td width="32%" style="padding: 20px; border-right: 1px solid #30363d;">
       <h3>Settings</h3>
       Helps users manage subnet watchlists, alert settings, AI preferences, profile settings, and appearance in one place.
     </td>
-    <td width="50%" style="padding: 20px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
+    <td width="68%" style="padding: 20px;">
+      <div style="display: flex; gap: 12px; align-items: flex-start; justify-content: center;">
         <img src="screenshots/settings.png" alt="Settings" height="600" />
         <img src="screenshots/setting2.png" alt="Settings detail" height="600" />
       </div>
