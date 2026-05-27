@@ -45,8 +45,6 @@ class AppTheme {
           height: 1.14,
           letterSpacing: -0.5,
           color: AppColors.textPrimary,
-          fontFamily: 'Inter',
-          fontFamilyFallback: ['SF Pro Display', 'Plus Jakarta Sans'],
         ),
       ),
       navigationBarTheme: NavigationBarThemeData(
@@ -68,8 +66,6 @@ class AppTheme {
                 ? FontWeight.w600
                 : FontWeight.w500,
             color: color,
-            fontFamily: 'Inter',
-            fontFamilyFallback: const ['SF Pro Display', 'Plus Jakarta Sans'],
           );
         }),
       ),

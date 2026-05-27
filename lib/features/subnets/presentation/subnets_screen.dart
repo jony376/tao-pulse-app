@@ -49,7 +49,7 @@ class _SubnetCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.surfaceCard.withValues(alpha: 0.95),
+        color: AppColors.surfaceCard.withValues(alpha: 0.96),
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(color: AppColors.borderSubtle),
       ),
@@ -57,71 +57,117 @@ class _SubnetCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              _TokenBadge(token: subnet.alphaTokenCharacter),
+              const SizedBox(width: AppSpacing.md),
               Expanded(
-                child: Text(
-                  '${subnet.name}  SN${subnet.netuid}',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 20),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
-                decoration: BoxDecoration(
-                  color: subnet.watching
-                      ? AppColors.aiPurple.withValues(alpha: 0.16)
-                      : Colors.white.withValues(alpha: 0.06),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                ),
-                child: Text(
-                  subnet.watching ? 'Watching' : subnet.status,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: subnet.watching ? AppColors.aiPurple : AppColors.textSecondary,
-                      ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text:
+                                      '${subnet.netuid}  ${_displayTokenSymbol(subnet.alphaTokenCharacter)}  ',
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                        fontSize: 14,
+                                        color: AppColors.textSecondary,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                                TextSpan(
+                                  text: subnet.name,
+                                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                        fontSize: 16,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        _StatusChip(
+                          label: subnet.watching ? 'Watching' : 'Watch',
+                          color:
+                              subnet.watching ? AppColors.aiPurple : AppColors.textSecondary,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      subnet.summary,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: 14,
+                            color: AppColors.textSecondary,
+                            height: 1.35,
+                          ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: AppSpacing.md),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    _MetricRow(
+                      label:
+                          'Alpha Token',
+                      value:
+                          '${_formatPreciseTao(subnet.alphaPriceTao)} T',
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    _MetricRow(
+                      label: 'TVL',
+                      value: '${_formatCompactTao(subnet.tvlTao)} T',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Column(
+                  children: [
+                    _MetricRow(
+                      label: 'Market',
+                      value: '${_formatCompactTao(subnet.marketCapTao)} T',
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    _MetricRow(
+                      label: 'Volume 24h',
+                      value: '${_formatCompactTao(subnet.volume24hTao)} T',
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
           Text(
-            subnet.summary,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            subnet.minersDo,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontSize: 14,
                   color: AppColors.textSecondary,
-                  height: 1.35,
+                  height: 1.4,
                 ),
           ),
-          const SizedBox(height: AppSpacing.lg),
-          Row(
-            children: [
-              Expanded(
-                child: _MetricTile(
-                  label: 'Emission 24h',
-                  value: '${subnet.emissionChangePct24h.toStringAsFixed(1)}%',
-                ),
-              ),
-              Expanded(
-                child: _MetricTile(
-                  label: 'Stake 24h',
-                  value: '${subnet.stakeChangeTao24h} TAO',
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Row(
-            children: [
-              Expanded(
-                child: _MetricTile(
-                  label: 'Validators',
-                  value: '${subnet.activeValidators}',
-                ),
-              ),
-              Expanded(
-                child: _MetricTile(
-                  label: 'Miners',
-                  value: '${subnet.activeMiners}',
-                ),
-              ),
-            ],
+          const SizedBox(height: AppSpacing.md),
+          Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
+            children: subnet.marketKeywords
+                .map((keyword) => _KeywordChip(label: keyword))
+                .toList(),
           ),
         ],
       ),
@@ -129,8 +175,8 @@ class _SubnetCard extends StatelessWidget {
   }
 }
 
-class _MetricTile extends StatelessWidget {
-  const _MetricTile({
+class _MetricRow extends StatelessWidget {
+  const _MetricRow({
     required this.label,
     required this.value,
   });
@@ -141,11 +187,11 @@ class _MetricTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: AppSpacing.sm),
-      padding: const EdgeInsets.all(AppSpacing.md),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.03),
-        borderRadius: BorderRadius.circular(AppRadius.smallCard),
+        color: Colors.white.withValues(alpha: 0.04),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(color: AppColors.borderSubtle),
       ),
       child: Column(
@@ -154,16 +200,125 @@ class _MetricTile extends StatelessWidget {
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontSize: 12,
                   color: AppColors.textSecondary,
                 ),
           ),
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: 2),
           Text(
             value,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 16),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontSize: 13,
+                  color: AppColors.textPrimary,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
         ],
       ),
     );
   }
+}
+
+class _TokenBadge extends StatelessWidget {
+  const _TokenBadge({required this.token});
+
+  final String token;
+
+  @override
+  Widget build(BuildContext context) {
+    return CircleAvatar(
+      radius: 24,
+      backgroundColor: Colors.white.withValues(alpha: 0.08),
+      child: Icon(
+        Icons.image_outlined,
+        size: 18,
+        color: AppColors.textSecondary,
+      ),
+    );
+  }
+}
+
+class _StatusChip extends StatelessWidget {
+  const _StatusChip({
+    required this.label,
+    required this.color,
+  });
+
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.16),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: color.withValues(alpha: 0.25)),
+      ),
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontSize: 11,
+              color: color,
+            ),
+      ),
+    );
+  }
+}
+
+class _KeywordChip extends StatelessWidget {
+  const _KeywordChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+      decoration: BoxDecoration(
+        color: AppColors.brandEnd.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: AppColors.brandEnd.withValues(alpha: 0.18)),
+      ),
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              fontSize: 11,
+              color: AppColors.textPrimary,
+            ),
+      ),
+    );
+  }
+}
+
+String _formatCompactTao(double value) {
+  final absolute = value.abs();
+  if (absolute >= 1000000) {
+    return '${(value / 1000000).toStringAsFixed(absolute >= 10000000 ? 0 : 1)}M';
+  }
+  if (absolute >= 1000) {
+    return '${(value / 1000).toStringAsFixed(absolute >= 10000 ? 0 : 1)}K';
+  }
+  if (value % 1 == 0) {
+    return value.toStringAsFixed(0);
+  }
+  return value.toStringAsFixed(1);
+}
+
+String _formatPreciseTao(double value) {
+  if (value >= 1) {
+    return value.toStringAsFixed(2);
+  }
+  if (value >= 0.1) {
+    return value.toStringAsFixed(3);
+  }
+  return value.toStringAsFixed(4);
+}
+
+String _displayTokenSymbol(String value) {
+  if (value.trim().isEmpty) {
+    return '?';
+  }
+  return value.trim();
 }
