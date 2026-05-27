@@ -1,99 +1,119 @@
 # TaoPulse
-TaoPulse is an AI-powered mobile app for Bittensor that provides timely, relevant insights and alerts to help users stay on top of important ecosystem signals.
+An AI-powered mobile app for Bittensor that provides timely, relevant insights and alerts to help users stay on top of important ecosystem signals.
+
+# Vision
+Bittensor is difficult to understand and follow in realtime. The ecosystem moves quickly, information is fragmented, and important signals are easy to miss.
+
+TaoPulse aims to surface the most relevant signals, explain why they matter, and help users stay informed through intelligent feeds, alerts, and AI-powered insights.
+
+It should stay clear, calm, and mobile-first: not ad-like, not popup-heavy, and not overloaded with dashboard noise.
 
 # Features
 
-<table style="border-bottom: 1px solid #30363d; border-collapse: collapse;">
+<table style="border-left: 1px solid #30363d; border-right: 1px solid #30363d; border-collapse: collapse;">
   <tr>
-    <td width="32%" style="padding: 20px; border-right: 1px solid #30363d;">
+    <td width="40%" valign="middle" style="background-color: #0d1117; border-right: 1px solid #30363d; padding: 20px;">
       <h3>Live Feed</h3>
-      An AI-backed live feed that surfaces the most relevant Bittensor signals for your interests, whether you are evaluating subnets, staking, or mining.
+      AI-backed live feed that surfaces the most relevant Bittensor signals for your interests, whether you are evaluating subnets, staking, or mining.
     </td>
-    <td width="68%" style="padding: 20px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start; justify-content: center;">
-        <img src="screenshots/live_feed.png" alt="Live Feed" height="600" />
-        <img src="screenshots/live_feed2.png" alt="Live Feed detail" height="600" />
-      </div>
+    <td width="60%" style="background-color: #0d1117; padding: 20px;">
+      <p align="center">
+        <img src="screenshots/live_feed.png" alt="Live Feed" width="48%" />
+        <img src="screenshots/live_feed2.png" alt="Live Feed detail" width="48%" />
+      </p>
     </td>
   </tr>
   <tr>
-    <td width="32%" style="padding: 20px; border-right: 1px solid #30363d;">
+    <td width="40%" valign="middle" style="background-color: #161b22; border-right: 1px solid #30363d; padding: 20px;">
       <h3>Subnets</h3>
       Helps users understand, compare, and follow Bittensor subnets with concise descriptions, key metrics, and deeper context.
     </td>
-    <td width="68%" style="padding: 20px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start; justify-content: center;">
-        <img src="screenshots/subnets.png" alt="Subnets" height="600" />
-        <img src="screenshots/subnets2.png" alt="Subnets detail" height="600" />
-      </div>
+    <td width="60%" style="background-color: #161b22; padding: 20px;">
+      <p align="center">
+        <img src="screenshots/subnets.png" alt="Subnets" width="48%" />
+        <img src="screenshots/subnets2.png" alt="Subnets detail" width="48%" />
+      </p>
     </td>
   </tr>
   <tr>
-    <td width="32%" style="padding: 20px; border-right: 1px solid #30363d;">
+    <td width="40%" valign="middle" style="background-color: #0d1117; border-right: 1px solid #30363d; padding: 20px;">
       <h3>Ask AI</h3>
       Helps users understand Bittensor activity through plain-language questions and concise AI explanations.
     </td>
-    <td width="68%" style="padding: 20px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start; justify-content: center;">
-        <img src="screenshots/ask_ai.png" alt="Ask AI" height="600" />
-        <img src="screenshots/ask_ak2.png" alt="Ask AI detail" height="600" />
-      </div>
+    <td width="60%" style="background-color: #0d1117; padding: 20px;">
+      <p align="center">
+        <img src="screenshots/ask_ai.png" alt="Ask AI" width="48%" />
+        <img src="screenshots/ask_ak2.png" alt="Ask AI detail" width="48%" />
+      </p>
     </td>
   </tr>
   <tr>
-    <td width="32%" style="padding: 20px; border-right: 1px solid #30363d;">
+    <td width="40%" valign="middle" style="background-color: #161b22; border-right: 1px solid #30363d; padding: 20px;">
       <h3>Alerts</h3>
       Helps users stay on top of important subnet events and control which activity triggers notifications.
     </td>
-    <td width="68%" style="padding: 20px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start; justify-content: center;">
-        <img src="screenshots/alerts.png" alt="Alerts" height="600" />
-        <img src="screenshots/alerts2.png" alt="Alerts detail" height="600" />
-      </div>
+    <td width="60%" style="background-color: #161b22; padding: 20px;">
+      <p align="center">
+        <img src="screenshots/alerts.png" alt="Alerts" width="48%" />
+        <img src="screenshots/alerts2.png" alt="Alerts detail" width="48%" />
+      </p>
     </td>
   </tr>
   <tr>
-    <td width="32%" style="padding: 20px; border-right: 1px solid #30363d;">
+    <td width="40%" valign="middle" style="background-color: #0d1117; border-right: 1px solid #30363d; padding: 20px;">
       <h3>Settings</h3>
       Helps users manage subnet watchlists, alert settings, AI preferences, profile settings, and appearance in one place.
     </td>
-    <td width="68%" style="padding: 20px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start; justify-content: center;">
-        <img src="screenshots/settings.png" alt="Settings" height="600" />
-        <img src="screenshots/setting2.png" alt="Settings detail" height="600" />
-      </div>
+    <td width="60%" style="background-color: #0d1117; padding: 20px;">
+      <p align="center">
+        <img src="screenshots/settings.png" alt="Settings" width="48%" />
+        <img src="screenshots/setting2.png" alt="Settings detail" width="48%" />
+      </p>
     </td>
   </tr>
 </table>
 
-# Why TaoPulse
+# Roadmap
 
-The [Bittensor](https://bittensor.com) ecosystem moves fast. Emissions change, validators shift weights, whales move stake, and important GitHub updates quietly affect network behavior.
+1. **Feed & Signal Quality**: Improve live feed relevance, prioritization, and signal quality.
+2. **Subnets**: Expand subnet coverage and improve subnet metadata and comparison signals.
+3. **AI & Insights**: Strengthen Ask AI context awareness, explanations, and source-aware responses.
+4. **Alerts & Watchlists**: Improve alert prioritization, watchlist workflows, and notification clarity.
+5. **Mobile UX**: Improve mobile-first usability, responsiveness, and information clarity.
+6. **Infrastructure & Backend**: Evolve the backend from mock-driven development toward more production-ready data pipelines and ingestion workflows.
 
-Most of that information is scattered across dashboards, Discord, Telegram, GitHub, CLI tools, and social feeds.
+# Architecture
 
-TaoPulse helps users quickly understand what changed, why it matters, what deserves attention through realtime feeds, alerts, and AI-powered explanations built mobile-first for the Bittensor ecosystem.
+TaoPulse uses a feature-first Flutter app structure with shared app, core, and UI layers.
 
-# Development
-
-Install Flutter by following the official guide for your platform:
-
-- https://docs.flutter.dev/get-started/install
-
-Then set up and run the app:
-
-```bash
-flutter pub get
-flutter run
+```text
+lib/
+├── app/                  # app entry, shell, and routing
+├── core/                 # theme, networking, storage, and core utilities
+├── features/
+│   └── <feature>/
+│       ├── data/         # repositories and data sources
+│       ├── models/       # feature models
+│       └── presentation/ # screens, view models, and widgets
+├── shared/               # shared widgets and UI helpers
+└── main.dart
 ```
 
-Useful commands:
+Most product areas follow the same pattern: feature data lives in `data/`, UI and state live in `presentation/`, and reusable app-wide pieces live in `core/` or `shared/`.
 
-```bash
-flutter doctor
-flutter analyze
+Dependency flow:
+
+```text
+Screens / UI -> Providers / view models -> Repositories -> API client
 ```
+
+Riverpod is used to inject app routing, repositories, and feature state.
+
+# Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and development setup.
 
 # License
 
-This project is licensed under the terms of the [MIT License](LICENSE).
+This project is licensed under the [GNU AGPL-3.0](LICENSE).
+
+Copyright (c) 2026 cogniax.
