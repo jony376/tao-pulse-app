@@ -20,11 +20,15 @@ class SubnetsScreen extends ConsumerWidget {
         title: const AppTopBar(title: 'Subnets'),
       ),
       body: subnetsAsync.when(
-        data: (subnets) => ListView.separated(
-          padding: const EdgeInsets.fromLTRB(4, AppSpacing.md, 4, 108),
-          itemCount: subnets.length,
-          separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.md),
-          itemBuilder: (context, index) => _SubnetCard(subnet: subnets[index]),
+        data: (subnets) => RefreshIndicator(
+          onRefresh: () => ref.refresh(subnetsProvider.future),
+          child: ListView.separated(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(4, AppSpacing.md, 4, 108),
+            itemCount: subnets.length,
+            separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.md),
+            itemBuilder: (context, index) => _SubnetCard(subnet: subnets[index]),
+          ),
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => Center(

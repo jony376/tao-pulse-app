@@ -74,18 +74,22 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
             child: feedAsync.when(
               data: (items) {
                 final filteredItems = _applyFilter(items, _selectedFilter);
-                return ListView.separated(
-                  padding: EdgeInsets.fromLTRB(
-                    4,
-                    0,
-                    4,
-                    bottomDockClearance,
+                return RefreshIndicator(
+                  onRefresh: () => ref.refresh(feedViewModelProvider.future),
+                  child: ListView.separated(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      4,
+                      0,
+                      4,
+                      bottomDockClearance,
+                    ),
+                    itemBuilder: (context, index) =>
+                        FeedItemTile(item: filteredItems[index]),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: AppSpacing.sm),
+                    itemCount: filteredItems.length,
                   ),
-                  itemBuilder: (context, index) =>
-                      FeedItemTile(item: filteredItems[index]),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: AppSpacing.sm),
-                  itemCount: filteredItems.length,
                 );
               },
               loading: () => const Center(child: CircularProgressIndicator()),

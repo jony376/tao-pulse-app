@@ -71,6 +71,14 @@ class ApiClient {
     return _unwrap(response.data);
   }
 
+  Future<Map<String, dynamic>> delete(String path) async {
+    final response = await _dio.delete<Map<String, dynamic>>(
+      path,
+      options: await _authorizedOptions(),
+    );
+    return _unwrap(response.data);
+  }
+
   Future<Options> _authorizedOptions() async {
     final token = await _getToken();
     return Options(headers: {'Authorization': 'Bearer $token'});
@@ -109,7 +117,11 @@ class ApiClient {
   }
 
   static String _resolveBaseUrl() {
-    const configuredBaseUrl = String.fromEnvironment('API_BASE_URL', defaultValue: '');
+    const configuredBaseUrl = String.fromEnvironment(
+      'API_BASE_URL',
+      defaultValue: '',
+      // defaultValue: 'https://icodex.space',
+    );
     if (configuredBaseUrl.isNotEmpty) {
       return configuredBaseUrl;
     }
