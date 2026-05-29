@@ -35,7 +35,8 @@ class AskAiScreen extends ConsumerWidget {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: dashboard.suggestions.length,
-                  separatorBuilder: (context, index) => const SizedBox(width: AppSpacing.md),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: AppSpacing.md),
                   itemBuilder: (context, index) => SizedBox(
                     width: 210,
                     child: _PromptCard(
@@ -50,32 +51,35 @@ class AskAiScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              const _SectionHeader(title: 'Recent conversations', actionLabel: 'Live'),
+              const _SectionHeader(
+                title: 'Recent conversations',
+                actionLabel: 'Live',
+              ),
               const SizedBox(height: AppSpacing.sm),
               SizedBox(
                 height: 88,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: dashboard.history.length,
-                  separatorBuilder: (context, index) => const SizedBox(width: AppSpacing.md),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: AppSpacing.md),
                   itemBuilder: (context, index) => SizedBox(
                     width: 170,
-                    child: _RecentConversationCard(data: dashboard.history[index]),
+                    child: _RecentConversationCard(
+                      data: dashboard.history[index],
+                    ),
                   ),
                 ),
               ),
               const Spacer(),
               const SizedBox(height: AppSpacing.md),
-              _AskAiComposer(
-                onSubmit: () => _openPromptDialog(context, ref),
-              ),
+              _AskAiComposer(onSubmit: () => _openPromptDialog(context, ref)),
             ],
           ),
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Text('Failed to load Ask AI: $error'),
-        ),
+        error: (error, stackTrace) =>
+            Center(child: Text('Failed to load Ask AI: $error')),
       ),
     );
   }
@@ -114,7 +118,11 @@ class AskAiScreen extends ConsumerWidget {
     await _openChatReply(context, ref, prompt);
   }
 
-  Future<void> _openChatReply(BuildContext context, WidgetRef ref, String message) async {
+  Future<void> _openChatReply(
+    BuildContext context,
+    WidgetRef ref,
+    String message,
+  ) async {
     final messenger = ScaffoldMessenger.of(context);
     messenger.showSnackBar(
       const SnackBar(content: Text('Sending message to TaoPulse AI...')),
@@ -143,23 +151,25 @@ class AskAiScreen extends ConsumerWidget {
           children: [
             Text(
               message,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontSize: 18),
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
               reply.content,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppColors.textSecondary,
-                    height: 1.45,
-                  ),
+                color: AppColors.textSecondary,
+                height: 1.45,
+              ),
             ),
             if (reply.sources.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.lg),
               Text(
                 'Sources: ${reply.sources.join(', ')}',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
               ),
             ],
           ],
@@ -182,7 +192,10 @@ class _AskAiHero extends StatelessWidget {
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              style: theme.textTheme.displaySmall?.copyWith(fontSize: 22, height: 1.15),
+              style: theme.textTheme.displaySmall?.copyWith(
+                fontSize: 22,
+                height: 1.15,
+              ),
               children: const [
                 TextSpan(text: 'How can I help you\n'),
                 TextSpan(
@@ -203,10 +216,10 @@ class _AskAiHero extends StatelessWidget {
             child: Text(
               'Ask anything about subnets, validators, stake, emissions, or ecosystem activity.',
               style: theme.textTheme.bodyLarge?.copyWith(
-                    color: AppColors.textSecondary,
-                    fontSize: 15,
-                    height: 1.3,
-                  ),
+                color: AppColors.textSecondary,
+                fontSize: 15,
+                height: 1.3,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -217,10 +230,7 @@ class _AskAiHero extends StatelessWidget {
 }
 
 class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.title,
-    this.actionLabel,
-  });
+  const _SectionHeader({required this.title, this.actionLabel});
 
   final String title;
   final String? actionLabel;
@@ -238,15 +248,17 @@ class _SectionHeader extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontSize: 18),
           ),
         ),
         if (actionLabel != null)
           Text(
             actionLabel!,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.aiPurple,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.labelLarge?.copyWith(color: AppColors.aiPurple),
           ),
       ],
     );
@@ -254,10 +266,7 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _PromptCard extends StatelessWidget {
-  const _PromptCard({
-    required this.data,
-    required this.onTap,
-  });
+  const _PromptCard({required this.data, required this.onTap});
 
   final AskAiPrompt data;
   final VoidCallback onTap;
@@ -307,16 +316,19 @@ class _PromptCard extends StatelessWidget {
               const SizedBox(height: AppSpacing.sm),
               Text(
                 data.title,
-                style: theme.textTheme.titleLarge?.copyWith(fontSize: 15, height: 1.15),
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontSize: 15,
+                  height: 1.15,
+                ),
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
                 data.subtitle,
                 style: theme.textTheme.bodyMedium?.copyWith(
-                      color: AppColors.textSecondary,
-                      fontSize: 14,
-                      height: 1.25,
-                    ),
+                  color: AppColors.textSecondary,
+                  fontSize: 14,
+                  height: 1.25,
+                ),
               ),
             ],
           ),
@@ -387,9 +399,9 @@ class _AskAiComposer extends StatelessWidget {
               child: Text(
                 'Ask anything about Bittensor...',
                 style: theme.textTheme.bodyLarge?.copyWith(
-                      color: AppColors.textSecondary,
-                      fontSize: 15,
-                    ),
+                  color: AppColors.textSecondary,
+                  fontSize: 15,
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
@@ -433,7 +445,11 @@ class _RecentConversationCard extends StatelessWidget {
               color: AppColors.aiPurple.withValues(alpha: 0.16),
               borderRadius: BorderRadius.circular(AppRadius.button),
             ),
-            child: const Icon(Icons.chat_bubble_outline, color: AppColors.aiPurple, size: 18),
+            child: const Icon(
+              Icons.chat_bubble_outline,
+              color: AppColors.aiPurple,
+              size: 18,
+            ),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
@@ -446,21 +462,25 @@ class _RecentConversationCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: AppColors.textPrimary,
-                        fontSize: 13,
-                      ),
+                    color: AppColors.textPrimary,
+                    fontSize: 13,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   data.timeAgo,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.chevron_right, color: AppColors.textSecondary, size: 18),
+          const Icon(
+            Icons.chevron_right,
+            color: AppColors.textSecondary,
+            size: 18,
+          ),
         ],
       ),
     );

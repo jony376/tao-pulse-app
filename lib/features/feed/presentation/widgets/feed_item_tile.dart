@@ -180,10 +180,7 @@ class FeedItemTile extends StatelessWidget {
 }
 
 class _FeedTag extends StatelessWidget {
-  const _FeedTag({
-    required this.label,
-    required this.color,
-  });
+  const _FeedTag({required this.label, required this.color});
 
   final String label;
   final Color color;
@@ -201,9 +198,7 @@ class _FeedTag extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-          color: color,
-        ),
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(color: color),
       ),
     );
   }

@@ -23,10 +23,11 @@ class AskAiRepository {
     final suggestionsData = results[0];
     final historyData = results[1];
 
-    final suggestions = (suggestionsData['items'] as List<dynamic>? ?? <dynamic>[])
-        .whereType<Map<String, dynamic>>()
-        .map(AskAiPrompt.fromJson)
-        .toList();
+    final suggestions =
+        (suggestionsData['items'] as List<dynamic>? ?? <dynamic>[])
+            .whereType<Map<String, dynamic>>()
+            .map(AskAiPrompt.fromJson)
+            .toList();
     final history = (historyData['items'] as List<dynamic>? ?? <dynamic>[])
         .whereType<Map<String, dynamic>>()
         .map(ChatHistoryItem.fromJson)
@@ -38,20 +39,14 @@ class AskAiRepository {
   Future<ChatReply> sendMessage(String message, {String? threadId}) async {
     final data = await _apiClient.post(
       '/api/v1/chat',
-      data: {
-        'message': message,
-        'thread_id': threadId,
-      },
+      data: {'message': message, 'thread_id': threadId},
     );
     return ChatReply.fromJson(data);
   }
 }
 
 class AskAiDashboard {
-  const AskAiDashboard({
-    required this.suggestions,
-    required this.history,
-  });
+  const AskAiDashboard({required this.suggestions, required this.history});
 
   final List<AskAiPrompt> suggestions;
   final List<ChatHistoryItem> history;
@@ -116,7 +111,8 @@ class ChatReply {
     return ChatReply(
       threadId: json['thread_id'] as String? ?? '',
       content: message['content'] as String? ?? '',
-      sources: (message['sources'] as List<dynamic>? ?? <dynamic>[]).cast<String>(),
+      sources: (message['sources'] as List<dynamic>? ?? <dynamic>[])
+          .cast<String>(),
     );
   }
 }

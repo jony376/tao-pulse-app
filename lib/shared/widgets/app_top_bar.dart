@@ -19,7 +19,8 @@ class AppTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final actions = rightActions ??
+    final actions =
+        rightActions ??
         ((rightIcons ?? (showSearch ? const [Icons.search] : const []))
             .map((icon) => AppTopBarAction(icon: icon))
             .toList());
@@ -62,9 +63,9 @@ class AppTopBar extends StatelessWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontSize: 24,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontSize: 24),
               textAlign: TextAlign.center,
             ),
           ),
@@ -75,10 +76,7 @@ class AppTopBar extends StatelessWidget {
 }
 
 class AppTopBarAction {
-  const AppTopBarAction({
-    required this.icon,
-    this.onPressed,
-  });
+  const AppTopBarAction({required this.icon, this.onPressed});
 
   final IconData icon;
   final VoidCallback? onPressed;

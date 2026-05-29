@@ -10,14 +10,14 @@ final apiClientProvider = Provider<ApiClient>((ref) {
 
 class ApiClient {
   ApiClient()
-      : _dio = Dio(
-          BaseOptions(
-            baseUrl: _resolveBaseUrl(),
-            connectTimeout: const Duration(seconds: 10),
-            receiveTimeout: const Duration(seconds: 10),
-            contentType: 'application/json',
-          ),
-        );
+    : _dio = Dio(
+        BaseOptions(
+          baseUrl: _resolveBaseUrl(),
+          connectTimeout: const Duration(seconds: 10),
+          receiveTimeout: const Duration(seconds: 10),
+          contentType: 'application/json',
+        ),
+      );
 
   final Dio _dio;
   String? _token;
@@ -35,10 +35,7 @@ class ApiClient {
     return _unwrap(response.data);
   }
 
-  Future<Map<String, dynamic>> post(
-    String path, {
-    Object? data,
-  }) async {
+  Future<Map<String, dynamic>> post(String path, {Object? data}) async {
     final response = await _dio.post<Map<String, dynamic>>(
       path,
       data: data,
@@ -47,10 +44,7 @@ class ApiClient {
     return _unwrap(response.data);
   }
 
-  Future<Map<String, dynamic>> put(
-    String path, {
-    Object? data,
-  }) async {
+  Future<Map<String, dynamic>> put(String path, {Object? data}) async {
     final response = await _dio.put<Map<String, dynamic>>(
       path,
       data: data,
@@ -59,10 +53,7 @@ class ApiClient {
     return _unwrap(response.data);
   }
 
-  Future<Map<String, dynamic>> patch(
-    String path, {
-    Object? data,
-  }) async {
+  Future<Map<String, dynamic>> patch(String path, {Object? data}) async {
     final response = await _dio.patch<Map<String, dynamic>>(
       path,
       data: data,

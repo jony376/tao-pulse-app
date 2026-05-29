@@ -6,7 +6,9 @@ final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   return SettingsRepository(ref.watch(apiClientProvider));
 });
 
-final settingsDashboardProvider = FutureProvider<SettingsDashboard>((ref) async {
+final settingsDashboardProvider = FutureProvider<SettingsDashboard>((
+  ref,
+) async {
   return ref.watch(settingsRepositoryProvider).getDashboard();
 });
 
@@ -32,24 +34,28 @@ class SettingsRepository {
     final settings = settingsData;
     final watchlist = (watchlistData['items'] as List<dynamic>? ?? <dynamic>[]);
     final activityAlerts =
-        (alertSettingsData['activity_alerts'] as Map<String, dynamic>? ?? const {});
+        (alertSettingsData['activity_alerts'] as Map<String, dynamic>? ??
+        const {});
 
     return SettingsDashboard(
       fullName: user['full_name'] as String? ?? '',
       initials: user['initials'] as String? ?? '',
       watchingEntities: stats['watching_entities'] as int? ?? watchlist.length,
       alertsEnabled: stats['alerts_enabled'] as int? ?? activityAlerts.length,
-      aiConversationsThisMonth: stats['ai_conversations_this_month'] as int? ?? 0,
+      aiConversationsThisMonth:
+          stats['ai_conversations_this_month'] as int? ?? 0,
       watchingCountLabel: '+${watchlist.length}',
       notificationSummary:
           '${activityAlerts.values.where((value) => value == true).length} categories on',
       aiPreferenceLabel:
-          (settings['ai_preferences'] as Map<String, dynamic>? ?? const {})['response_style']
-                  as String? ??
-              'Balanced',
+          (settings['ai_preferences'] as Map<String, dynamic>? ??
+                  const {})['response_style']
+              as String? ??
+          'Balanced',
       appearanceLabel:
-          (settings['appearance'] as Map<String, dynamic>? ?? const {})['theme'] as String? ??
-              'Dark',
+          (settings['appearance'] as Map<String, dynamic>? ?? const {})['theme']
+              as String? ??
+          'Dark',
     );
   }
 }

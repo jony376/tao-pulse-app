@@ -164,10 +164,7 @@ class _NavItem extends StatelessWidget {
 }
 
 class _AskAiNavItem extends StatelessWidget {
-  const _AskAiNavItem({
-    required this.isSelected,
-    required this.onTap,
-  });
+  const _AskAiNavItem({required this.isSelected, required this.onTap});
 
   final bool isSelected;
   final VoidCallback onTap;
@@ -196,9 +193,7 @@ class _AskAiNavItem extends StatelessWidget {
               height: 62,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.18),
-                ),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
               ),
               child: const Icon(
                 Icons.auto_awesome,

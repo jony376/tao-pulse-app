@@ -78,12 +78,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
                   onRefresh: () => ref.refresh(feedViewModelProvider.future),
                   child: ListView.separated(
                     physics: const AlwaysScrollableScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      4,
-                      0,
-                      4,
-                      bottomDockClearance,
-                    ),
+                    padding: EdgeInsets.fromLTRB(4, 0, 4, bottomDockClearance),
                     itemBuilder: (context, index) =>
                         FeedItemTile(item: filteredItems[index]),
                     separatorBuilder: (context, index) =>
@@ -93,9 +88,8 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
                 );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stackTrace) => Center(
-                child: Text('Failed to load feed: $error'),
-              ),
+              error: (error, stackTrace) =>
+                  Center(child: Text('Failed to load feed: $error')),
             ),
           ),
         ],
@@ -108,13 +102,21 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
       case 'All':
         return items;
       case 'Watchlist':
-        return items.where((item) => item.tags.any((tag) => tag.startsWith('SN'))).toList();
+        return items
+            .where((item) => item.tags.any((tag) => tag.startsWith('SN')))
+            .toList();
       case 'Subnets':
-        return items.where((item) => item.category == 'Subnet Activity').toList();
+        return items
+            .where((item) => item.category == 'Subnet Activity')
+            .toList();
       case 'Stake':
-        return items.where((item) => item.category == 'Stake Movement').toList();
+        return items
+            .where((item) => item.category == 'Stake Movement')
+            .toList();
       case 'Validators':
-        return items.where((item) => item.title.toLowerCase().contains('validator')).toList();
+        return items
+            .where((item) => item.title.toLowerCase().contains('validator'))
+            .toList();
       case 'Governance':
         return items.where((item) => item.category == 'Governance').toList();
       case 'AI Insights':

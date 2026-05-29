@@ -26,14 +26,15 @@ class SubnetsScreen extends ConsumerWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.fromLTRB(4, AppSpacing.md, 4, 108),
             itemCount: subnets.length,
-            separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.md),
-            itemBuilder: (context, index) => _SubnetCard(subnet: subnets[index]),
+            separatorBuilder: (context, index) =>
+                const SizedBox(height: AppSpacing.md),
+            itemBuilder: (context, index) =>
+                _SubnetCard(subnet: subnets[index]),
           ),
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Text('Failed to load subnets: $error'),
-        ),
+        error: (error, stackTrace) =>
+            Center(child: Text('Failed to load subnets: $error')),
       ),
     );
   }
@@ -74,7 +75,8 @@ class _SubnetCard extends StatelessWidget {
                                 TextSpan(
                                   text:
                                       '${subnet.netuid}  ${_displayTokenSymbol(subnet.alphaTokenCharacter)}  ',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(
                                         fontSize: 14,
                                         color: AppColors.textSecondary,
                                         fontWeight: FontWeight.w500,
@@ -82,9 +84,8 @@ class _SubnetCard extends StatelessWidget {
                                 ),
                                 TextSpan(
                                   text: subnet.name,
-                                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                        fontSize: 16,
-                                      ),
+                                  style: Theme.of(context).textTheme.titleLarge
+                                      ?.copyWith(fontSize: 16),
                                 ),
                               ],
                             ),
@@ -93,8 +94,9 @@ class _SubnetCard extends StatelessWidget {
                         const SizedBox(width: AppSpacing.sm),
                         _StatusChip(
                           label: subnet.watching ? 'Watching' : 'Watch',
-                          color:
-                              subnet.watching ? AppColors.aiPurple : AppColors.textSecondary,
+                          color: subnet.watching
+                              ? AppColors.aiPurple
+                              : AppColors.textSecondary,
                         ),
                       ],
                     ),
@@ -104,10 +106,10 @@ class _SubnetCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: 14,
-                            color: AppColors.textSecondary,
-                            height: 1.35,
-                          ),
+                        fontSize: 14,
+                        color: AppColors.textSecondary,
+                        height: 1.35,
+                      ),
                     ),
                   ],
                 ),
@@ -121,10 +123,8 @@ class _SubnetCard extends StatelessWidget {
                 child: Column(
                   children: [
                     _MetricRow(
-                      label:
-                          'Alpha Token',
-                      value:
-                          '${_formatPreciseTao(subnet.alphaPriceTao)} T',
+                      label: 'Alpha Token',
+                      value: '${_formatPreciseTao(subnet.alphaPriceTao)} T',
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     _MetricRow(
@@ -156,10 +156,10 @@ class _SubnetCard extends StatelessWidget {
           Text(
             subnet.minersDo,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: 14,
-                  color: AppColors.textSecondary,
-                  height: 1.4,
-                ),
+              fontSize: 14,
+              color: AppColors.textSecondary,
+              height: 1.4,
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           Wrap(
@@ -176,10 +176,7 @@ class _SubnetCard extends StatelessWidget {
 }
 
 class _MetricRow extends StatelessWidget {
-  const _MetricRow({
-    required this.label,
-    required this.value,
-  });
+  const _MetricRow({required this.label, required this.value});
 
   final String label;
   final String value;
@@ -188,7 +185,10 @@ class _MetricRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.04),
         borderRadius: BorderRadius.circular(10),
@@ -200,18 +200,18 @@ class _MetricRow extends StatelessWidget {
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                ),
+              fontSize: 12,
+              color: AppColors.textSecondary,
+            ),
           ),
           const SizedBox(height: 2),
           Text(
             value,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: 13,
-                  color: AppColors.textPrimary,
-                  fontWeight: FontWeight.w600,
-                ),
+              fontSize: 13,
+              color: AppColors.textPrimary,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ],
       ),
@@ -239,10 +239,7 @@ class _TokenBadge extends StatelessWidget {
 }
 
 class _StatusChip extends StatelessWidget {
-  const _StatusChip({
-    required this.label,
-    required this.color,
-  });
+  const _StatusChip({required this.label, required this.color});
 
   final String label;
   final Color color;
@@ -250,7 +247,10 @@ class _StatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -258,10 +258,9 @@ class _StatusChip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontSize: 11,
-              color: color,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.labelMedium?.copyWith(fontSize: 11, color: color),
       ),
     );
   }
@@ -275,7 +274,10 @@ class _KeywordChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
       decoration: BoxDecoration(
         color: AppColors.brandEnd.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -284,9 +286,9 @@ class _KeywordChip extends StatelessWidget {
       child: Text(
         label,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontSize: 11,
-              color: AppColors.textPrimary,
-            ),
+          fontSize: 11,
+          color: AppColors.textPrimary,
+        ),
       ),
     );
   }

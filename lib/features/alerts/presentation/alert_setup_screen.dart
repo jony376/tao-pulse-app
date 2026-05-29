@@ -70,13 +70,15 @@ class _AlertSetupScreenState extends ConsumerState<AlertSetupScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(_subnetName, style: Theme.of(context).textTheme.titleLarge),
+                          Text(
+                            _subnetName,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
                           const SizedBox(height: AppSpacing.xs),
                           Text(
                             'Netuid: $_netuid',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: AppColors.textSecondary,
-                                ),
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: AppColors.textSecondary),
                           ),
                         ],
                       ),
@@ -93,8 +95,8 @@ class _AlertSetupScreenState extends ConsumerState<AlertSetupScreen> {
                       child: Text(
                         _watching ? 'Watching' : 'Paused',
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                              color: AppColors.success,
-                            ),
+                          color: AppColors.success,
+                        ),
                       ),
                     ),
                   ],
@@ -142,7 +144,8 @@ class _AlertSetupScreenState extends ConsumerState<AlertSetupScreen> {
                       .map(
                         (entry) => _SetupToggleTile(
                           title: entry.key,
-                          subtitle: 'Notify me about new releases and important updates.',
+                          subtitle:
+                              'Notify me about new releases and important updates.',
                           icon: Icons.code,
                           color: AppColors.textPrimary,
                           value: entry.value,
@@ -163,7 +166,9 @@ class _AlertSetupScreenState extends ConsumerState<AlertSetupScreen> {
                 child: FilledButton(
                   onPressed: _saving ? null : _saveSettings,
                   style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppRadius.button),
                     ),
@@ -175,9 +180,8 @@ class _AlertSetupScreenState extends ConsumerState<AlertSetupScreen> {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Text('Failed to load alert settings: $error'),
-        ),
+        error: (error, stackTrace) =>
+            Center(child: Text('Failed to load alert settings: $error')),
       ),
     );
   }
@@ -211,9 +215,9 @@ class _AlertSetupScreenState extends ConsumerState<AlertSetupScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Alert settings saved.')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Alert settings saved.')));
       ref.invalidate(alertSettingsProvider);
     } finally {
       if (mounted) {
@@ -284,9 +288,9 @@ class _SetupSectionLabel extends StatelessWidget {
     return Text(
       label,
       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: AppColors.textSecondary,
-            letterSpacing: 0.7,
-          ),
+        color: AppColors.textSecondary,
+        letterSpacing: 0.7,
+      ),
     );
   }
 }
@@ -338,15 +342,17 @@ class _SetupToggleTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 16),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontSize: 16),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   subtitle,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.textSecondary,
-                        height: 1.35,
-                      ),
+                    color: AppColors.textSecondary,
+                    height: 1.35,
+                  ),
                 ),
               ],
             ),

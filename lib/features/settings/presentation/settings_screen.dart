@@ -27,7 +27,8 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.lg),
             _PrimarySettingsCard(
               title: 'Watching',
-              description: 'Manage watched subnets, validators,\nwallets and miners.',
+              description:
+                  'Manage watched subnets, validators,\nwallets and miners.',
               icon: Icons.visibility_outlined,
               iconColor: AppColors.aiPurple,
               trailingText: dashboard.watchingCountLabel,
@@ -41,7 +42,8 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.md),
             _PrimarySettingsCard(
               title: 'Notification Settings',
-              description: 'Control what alerts you get\nand how you receive them.',
+              description:
+                  'Control what alerts you get\nand how you receive them.',
               icon: Icons.notifications_none_rounded,
               iconColor: AppColors.success,
               trailingText: dashboard.notificationSummary,
@@ -75,9 +77,8 @@ class SettingsScreen extends ConsumerWidget {
           ],
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Text('Failed to load settings: $error'),
-        ),
+        error: (error, stackTrace) =>
+            Center(child: Text('Failed to load settings: $error')),
       ),
     );
   }
@@ -207,10 +208,7 @@ class _ProfileSummaryCard extends StatelessWidget {
 }
 
 class _StatTile extends StatelessWidget {
-  const _StatTile({
-    required this.stat,
-    required this.showDivider,
-  });
+  const _StatTile({required this.stat, required this.showDivider});
 
   final _SettingsStat stat;
   final bool showDivider;
@@ -219,9 +217,14 @@ class _StatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: showDivider ? const Border(right: BorderSide(color: AppColors.borderSubtle)) : null,
+        border: showDivider
+            ? const Border(right: BorderSide(color: AppColors.borderSubtle))
+            : null,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -241,16 +244,18 @@ class _StatTile extends StatelessWidget {
               children: [
                 Text(
                   stat.value,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 18),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.headlineMedium?.copyWith(fontSize: 18),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   stat.label,
                   maxLines: 2,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.textSecondary,
-                        height: 1.35,
-                      ),
+                    color: AppColors.textSecondary,
+                    height: 1.35,
+                  ),
                 ),
               ],
             ),
@@ -311,17 +316,19 @@ class _PrimarySettingsCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: theme.textTheme.headlineMedium?.copyWith(fontSize: compact ? 18 : 20),
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontSize: compact ? 18 : 20,
+                  ),
                 ),
                 SizedBox(height: compact ? AppSpacing.xs : AppSpacing.sm),
                 Text(
                   description,
                   maxLines: compact ? 2 : null,
                   style: theme.textTheme.bodyLarge?.copyWith(
-                        color: AppColors.textSecondary,
-                        height: 1.3,
-                        fontSize: compact ? 12 : null,
-                      ),
+                    color: AppColors.textSecondary,
+                    height: 1.3,
+                    fontSize: compact ? 12 : null,
+                  ),
                 ),
               ],
             ),
@@ -334,7 +341,11 @@ class _PrimarySettingsCard extends StatelessWidget {
             compact: compact,
           ),
           SizedBox(width: compact ? AppSpacing.sm : AppSpacing.md),
-          Icon(Icons.chevron_right, color: AppColors.textSecondary, size: compact ? 22 : 28),
+          Icon(
+            Icons.chevron_right,
+            color: AppColors.textSecondary,
+            size: compact ? 22 : 28,
+          ),
         ],
       ),
     );
@@ -354,7 +365,10 @@ class _GroupedUtilityCard extends StatelessWidget {
       ),
       child: const Column(
         children: [
-          _UtilityRow(icon: Icons.verified_user_outlined, title: 'Data & Privacy'),
+          _UtilityRow(
+            icon: Icons.verified_user_outlined,
+            title: 'Data & Privacy',
+          ),
           _UtilityRow(icon: Icons.help_outline, title: 'Help & Support'),
           _UtilityRow(
             icon: Icons.info_outline,
@@ -384,9 +398,14 @@ class _UtilityRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.lg),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.lg,
+      ),
       decoration: BoxDecoration(
-        border: showDivider ? const Border(bottom: BorderSide(color: AppColors.borderSubtle)) : null,
+        border: showDivider
+            ? const Border(bottom: BorderSide(color: AppColors.borderSubtle))
+            : null,
       ),
       child: Row(
         children: [
@@ -396,9 +415,9 @@ class _UtilityRow extends StatelessWidget {
             child: Text(
               title,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontSize: 18,
-                    color: AppColors.textPrimary,
-                  ),
+                fontSize: 18,
+                color: AppColors.textPrimary,
+              ),
             ),
           ),
           if (trailingText != null)
@@ -407,11 +426,15 @@ class _UtilityRow extends StatelessWidget {
               child: Text(
                 trailingText!,
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
+                  color: AppColors.textSecondary,
+                ),
               ),
             ),
-          const Icon(Icons.chevron_right, color: AppColors.textSecondary, size: 24),
+          const Icon(
+            Icons.chevron_right,
+            color: AppColors.textSecondary,
+            size: 24,
+          ),
         ],
       ),
     );
@@ -439,19 +462,27 @@ class _LogoutCard extends StatelessWidget {
               color: AppColors.critical.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(AppRadius.button),
             ),
-            child: const Icon(Icons.logout_rounded, color: AppColors.critical, size: 24),
+            child: const Icon(
+              Icons.logout_rounded,
+              color: AppColors.critical,
+              size: 24,
+            ),
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Text(
               'Log Out',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AppColors.critical,
-                    fontSize: 18,
-                  ),
+                color: AppColors.critical,
+                fontSize: 18,
+              ),
             ),
           ),
-          const Icon(Icons.chevron_right, color: AppColors.textSecondary, size: 24),
+          const Icon(
+            Icons.chevron_right,
+            color: AppColors.textSecondary,
+            size: 24,
+          ),
         ],
       ),
     );
@@ -477,7 +508,8 @@ class _SettingsCardTrailing extends StatelessWidget {
       final overlapCount = avatarColors.length;
       final avatarSize = compact ? 22.0 : 34.0;
       final overlapOffset = compact ? 14.0 : 28.0;
-      final avatarStripWidth = avatarSize + (overlapOffset * (overlapCount - 1));
+      final avatarStripWidth =
+          avatarSize + (overlapOffset * (overlapCount - 1));
 
       return Row(
         mainAxisSize: MainAxisSize.min,
@@ -496,7 +528,10 @@ class _SettingsCardTrailing extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: avatarColors[i].withValues(alpha: 0.18),
                         shape: BoxShape.circle,
-                        border: Border.all(color: AppColors.surfaceCard, width: 1.2),
+                        border: Border.all(
+                          color: AppColors.surfaceCard,
+                          width: 1.2,
+                        ),
                       ),
                     ),
                   ),
@@ -516,9 +551,9 @@ class _SettingsCardTrailing extends StatelessWidget {
             child: Text(
               text ?? '',
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: AppColors.textPrimary,
-                    fontSize: compact ? 11 : null,
-                  ),
+                color: AppColors.textPrimary,
+                fontSize: compact ? 11 : null,
+              ),
             ),
           ),
         ],
@@ -530,7 +565,10 @@ class _SettingsCardTrailing extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
       decoration: BoxDecoration(
         color: (textColor ?? AppColors.textPrimary).withValues(alpha: 0.14),
         borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -538,8 +576,8 @@ class _SettingsCardTrailing extends StatelessWidget {
       child: Text(
         text!,
         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: textColor ?? AppColors.textPrimary,
-            ),
+          color: textColor ?? AppColors.textPrimary,
+        ),
       ),
     );
   }

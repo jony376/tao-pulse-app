@@ -6,8 +6,10 @@ final alertsRepositoryProvider = Provider<AlertsRepository>((ref) {
   return AlertsRepository(ref.watch(apiClientProvider));
 });
 
-final alertsProvider =
-    FutureProvider.family<List<AlertItem>, String>((ref, filter) async {
+final alertsProvider = FutureProvider.family<List<AlertItem>, String>((
+  ref,
+  filter,
+) async {
   return ref.watch(alertsRepositoryProvider).getAlerts(filter: filter);
 });
 
@@ -97,8 +99,10 @@ class AlertSettings {
       subnetName: subnet['name'] as String? ?? 'Subnet',
       netuid: subnet['netuid'] as int? ?? 0,
       watching: subnet['watching'] as bool? ?? false,
-      activityAlerts: (json['activity_alerts'] as Map<String, dynamic>? ?? const {})
-          .map((key, value) => MapEntry(key, value as bool)),
+      activityAlerts:
+          (json['activity_alerts'] as Map<String, dynamic>? ?? const {}).map(
+            (key, value) => MapEntry(key, value as bool),
+          ),
       otherAlerts: (json['other_alerts'] as Map<String, dynamic>? ?? const {})
           .map((key, value) => MapEntry(key, value as bool)),
     );
@@ -106,11 +110,7 @@ class AlertSettings {
 
   Map<String, dynamic> toJson() {
     return {
-      'subnet': {
-        'name': subnetName,
-        'netuid': netuid,
-        'watching': watching,
-      },
+      'subnet': {'name': subnetName, 'netuid': netuid, 'watching': watching},
       'activity_alerts': activityAlerts,
       'other_alerts': otherAlerts,
     };

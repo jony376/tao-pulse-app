@@ -13,10 +13,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/feed',
     routes: [
-      GoRoute(
-        path: '/profile',
-        redirect: (context, state) => '/settings',
-      ),
+      GoRoute(path: '/profile', redirect: (context, state) => '/settings'),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return AppShell(navigationShell: navigationShell);

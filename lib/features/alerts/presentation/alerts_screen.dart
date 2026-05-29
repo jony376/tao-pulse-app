@@ -41,14 +41,21 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(4, AppSpacing.md, 4, AppSpacing.md),
+            padding: const EdgeInsets.fromLTRB(
+              4,
+              AppSpacing.md,
+              4,
+              AppSpacing.md,
+            ),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: _filters
                     .map(
                       (filter) => Padding(
-                        padding: EdgeInsets.only(right: filter == _filters.last ? 0 : AppSpacing.md),
+                        padding: EdgeInsets.only(
+                          right: filter == _filters.last ? 0 : AppSpacing.md,
+                        ),
                         child: _AlertFilterChip(
                           label: filter,
                           selected: filter == _selectedFilter,
@@ -70,14 +77,14 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
                   }
                   return _AlertCard(item: alerts[index - 1]);
                 },
-                separatorBuilder: (context, index) =>
-                    SizedBox(height: index == 0 ? AppSpacing.md : AppSpacing.sm),
+                separatorBuilder: (context, index) => SizedBox(
+                  height: index == 0 ? AppSpacing.md : AppSpacing.sm,
+                ),
                 itemCount: alerts.length + 1,
               ),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stackTrace) => Center(
-                child: Text('Failed to load alerts: $error'),
-              ),
+              error: (error, stackTrace) =>
+                  Center(child: Text('Failed to load alerts: $error')),
             ),
           ),
         ],
@@ -115,9 +122,9 @@ class _AlertFilterChip extends StatelessWidget {
           ),
           child: Text(
             label,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.textPrimary,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.labelLarge?.copyWith(color: AppColors.textPrimary),
           ),
         ),
       ),
@@ -135,9 +142,9 @@ class _SectionLabel extends StatelessWidget {
     return Text(
       label,
       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: AppColors.textSecondary,
-            letterSpacing: 0.6,
-          ),
+        color: AppColors.textSecondary,
+        letterSpacing: 0.6,
+      ),
     );
   }
 }
@@ -183,7 +190,9 @@ class _AlertCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         item.category,
-                        style: theme.textTheme.titleLarge?.copyWith(fontSize: 16),
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                     Container(
@@ -197,30 +206,35 @@ class _AlertCard extends StatelessWidget {
                       ),
                       child: Text(
                         item.severity.toUpperCase(),
-                        style: theme.textTheme.labelMedium?.copyWith(color: severityStyle.$1),
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          color: severityStyle.$1,
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     Text(
                       item.timeAgo,
                       style: theme.textTheme.labelMedium?.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   item.title,
-                  style: theme.textTheme.headlineMedium?.copyWith(fontSize: 20, height: 1.2),
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontSize: 20,
+                    height: 1.2,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   item.description,
                   style: theme.textTheme.bodyLarge?.copyWith(
-                        color: AppColors.textSecondary,
-                        height: 1.35,
-                      ),
+                    color: AppColors.textSecondary,
+                    height: 1.35,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Row(
@@ -228,7 +242,9 @@ class _AlertCard extends StatelessWidget {
                     FilledButton.tonal(
                       onPressed: () {},
                       style: FilledButton.styleFrom(
-                        backgroundColor: AppColors.aiPurple.withValues(alpha: 0.18),
+                        backgroundColor: AppColors.aiPurple.withValues(
+                          alpha: 0.18,
+                        ),
                         foregroundColor: AppColors.aiPurple,
                       ),
                       child: const Text('Ask AI'),
