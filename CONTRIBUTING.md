@@ -6,10 +6,18 @@ This project is developed in public. Contributions are welcome for the Flutter a
 
 ## Ways to Get Involved
 
-- Open an issue for bugs, product feedback, or feature ideas.
-- Join GitHub discussions to ask questions or discuss product direction.
-- Open a pull request for focused improvements that align with the project direction.
-- Read the README first to understand TaoPulse and the main Bittensor concepts used in the product.
+Read the README first to understand TaoPulse and the main Bittensor concepts used in the product.
+
+GitHub:
+- Open [Issues](https://github.com/cogniax/tao-pulse-app/issues) for bugs, product feedback, or feature ideas.
+- Use [Discussions](https://github.com/cogniax/tao-pulse-app/discussions) for roadmap and contributor-facing project discussion.
+- Open [Pull Requests](https://github.com/cogniax/tao-pulse-app/pulls) for focused improvements that align with the project direction.
+- GitHub is the canonical place for issues, pull requests, and accepted project decisions.
+
+Element:
+- Use Element for community chat, technical questions, design feedback, and contributor coordination.
+- Room: https://matrix.to/#/#taopulse.app:matrix.org
+- If an important decision starts in chat, summarize it back into GitHub.
 
 ## Development Setup
 
