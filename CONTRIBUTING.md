@@ -35,21 +35,37 @@ Run the app on a connected device or emulator:
 flutter run
 ```
 
-Useful commands:
+Useful Flutter commands:
 
 ```bash
 flutter analyze
-flutter build apk --debug
 flutter build apk --release
+flutter build appbundle --release
+flutter build ios --release --no-codesign
+```
+
+You can also use the included Makefile for common workflows:
+
+```bash
+make bootstrap
+make format
+make format-check
+make analyze
+make run
+make run-release
+make build-apk
+make build-appbundle
+make build-ios
 ```
 
 API docs for app-facing testing: https://icodex.space/docs
 
 Notes:
 
-- Use the Flutter app directory as the working directory for Flutter commands.
+- Use the Flutter app directory as the working directory for Flutter or `make` commands.
 - Make sure an emulator or physical device is available before running the app.
-- If you change dependencies, run `flutter pub get` again.
+- If you change dependencies, run `flutter pub get` or `make bootstrap` again.
+- `make` is a convenience wrapper around common Flutter commands.
 
 
 ## Contribution Guidelines
