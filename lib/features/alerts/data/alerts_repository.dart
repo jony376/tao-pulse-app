@@ -98,13 +98,13 @@ class AlertSettings {
     return AlertSettings(
       subnetName: subnet['name'] as String? ?? 'Subnet',
       netuid: subnet['netuid'] as int? ?? 0,
-      watching: subnet['watching'] as bool? ?? false,
+      watching: _boolOf(subnet['watching']),
       activityAlerts:
           (json['activity_alerts'] as Map<String, dynamic>? ?? const {}).map(
-            (key, value) => MapEntry(key, value as bool),
+            (key, value) => MapEntry(key, _boolOf(value)),
           ),
       otherAlerts: (json['other_alerts'] as Map<String, dynamic>? ?? const {})
-          .map((key, value) => MapEntry(key, value as bool)),
+          .map((key, value) => MapEntry(key, _boolOf(value))),
     );
   }
 
@@ -115,4 +115,21 @@ class AlertSettings {
       'other_alerts': otherAlerts,
     };
   }
+}
+
+bool _boolOf(Object? value, {bool fallback = false}) {
+  if (value is bool) {
+    return value;
+  }
+  if (value is num) {
+    if (value == 1) return true;
+    if (value == 0) return false;
+    return fallback;
+  }
+  if (value is String) {
+    final normalized = value.trim().toLowerCase();
+    if (normalized == 'true' || normalized == '1') return true;
+    if (normalized == 'false' || normalized == '0') return false;
+  }
+  return fallback;
 }
