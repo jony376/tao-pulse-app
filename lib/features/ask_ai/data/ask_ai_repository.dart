@@ -111,8 +111,16 @@ class ChatReply {
     return ChatReply(
       threadId: json['thread_id'] as String? ?? '',
       content: message['content'] as String? ?? '',
-      sources: (message['sources'] as List<dynamic>? ?? <dynamic>[])
-          .cast<String>(),
+      sources: _stringListOf(message['sources']),
     );
   }
+}
+
+List<String> _stringListOf(Object? value) {
+  if (value is! List) return const [];
+  return value
+      .where((item) => item != null)
+      .map((item) => item.toString().trim())
+      .where((item) => item.isNotEmpty)
+      .toList();
 }
