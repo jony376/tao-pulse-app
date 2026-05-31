@@ -28,7 +28,16 @@ class FeedItemMapper {
       insight: json['insight'] as String? ?? '',
       timeAgo: json['time_ago'] as String? ?? '',
       impact: json['impact'] as String? ?? '',
-      tags: (json['tags'] as List<dynamic>? ?? <dynamic>[]).cast<String>(),
+      tags: _stringListOf(json['tags']),
     );
   }
+}
+
+List<String> _stringListOf(Object? value) {
+  if (value is! List) return const [];
+  return value
+      .where((item) => item != null)
+      .map((item) => item.toString().trim())
+      .where((item) => item.isNotEmpty)
+      .toList();
 }
