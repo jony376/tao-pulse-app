@@ -40,10 +40,9 @@ class SettingsRepository {
     return SettingsDashboard(
       fullName: user['full_name'] as String? ?? '',
       initials: user['initials'] as String? ?? '',
-      watchingEntities: stats['watching_entities'] as int? ?? watchlist.length,
-      alertsEnabled: stats['alerts_enabled'] as int? ?? activityAlerts.length,
-      aiConversationsThisMonth:
-          stats['ai_conversations_this_month'] as int? ?? 0,
+      watchingEntities: _intOf(stats['watching_entities'], watchlist.length),
+      alertsEnabled: _intOf(stats['alerts_enabled'], activityAlerts.length),
+      aiConversationsThisMonth: _intOf(stats['ai_conversations_this_month'], 0),
       watchingCountLabel: '+${watchlist.length}',
       notificationSummary:
           '${activityAlerts.values.where((value) => value == true).length} categories on',
@@ -58,6 +57,13 @@ class SettingsRepository {
           'Dark',
     );
   }
+}
+
+int _intOf(Object? value, int fallback) {
+  if (value is int) return value;
+  if (value is num) return value.toInt();
+  if (value is String) return int.tryParse(value) ?? fallback;
+  return fallback;
 }
 
 class SettingsDashboard {
