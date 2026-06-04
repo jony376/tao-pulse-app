@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/network/api_client.dart';
+import '../../../api/api_client.dart';
 
 final askAiRepositoryProvider = Provider<AskAiRepository>((ref) {
   return AskAiRepository(ref.watch(apiClientProvider));

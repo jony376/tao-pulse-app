@@ -1,4 +1,4 @@
-import '../../../core/network/api_client.dart';
+import '../../../api/api_client.dart';
 import '../models/feed_item.dart';
 import 'feed_repository.dart';
 

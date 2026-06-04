@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../core/theme/theme.dart';
-import 'router.dart';
+import '../theme/theme.dart';
+import 'app_router.dart';
 
 class TaoPulseApp extends ConsumerWidget {
   const TaoPulseApp({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/theme/theme.dart';
+import '../../../theme/theme.dart';
 import '../data/alerts_repository.dart';
 
 class AlertSetupScreen extends ConsumerStatefulWidget {

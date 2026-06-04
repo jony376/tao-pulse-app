@@ -1,5 +1,5 @@
 .PHONY: help bootstrap clean format format-check analyze \
-        run run-release build-apk build-appbundle build-ios
+        gen watch-gen native-splash run run-release build-apk build-appbundle build-ios
 
 help:
 	@echo "Available commands:"
@@ -9,6 +9,9 @@ help:
 	@echo "  make format          - Format Dart code in lib/ and test/"
 	@echo "  make format-check    - Check Dart formatting"
 	@echo "  make analyze         - Run static analysis"
+	@echo "  make gen             - Generate code with build_runner"
+	@echo "  make watch-gen       - Watch and regenerate code with build_runner"
+	@echo "  make native-splash   - Generate native splash assets"
 	@echo "  make run             - Run the app"
 	@echo "  make run-release     - Run the app in release mode"
 	@echo "  make build-apk       - Build Android release APK"
@@ -29,6 +32,15 @@ format-check:
 
 analyze:
 	flutter analyze
+
+gen:
+	dart run build_runner build --delete-conflicting-outputs
+
+watch-gen:
+	dart run build_runner watch --delete-conflicting-outputs
+
+native-splash:
+	dart run flutter_native_splash:create
 
 run:
 	flutter run
