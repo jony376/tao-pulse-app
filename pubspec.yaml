@@ -35,10 +35,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_riverpod: ^3.3.1
+  riverpod_annotation: ^4.0.2
   go_router: ^17.2.3
   dio: ^5.9.2
-  freezed_annotation: ^3.1.0
-  json_annotation: ^4.12.0
 
 dev_dependencies:
   flutter_test:
@@ -51,8 +50,9 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
   build_runner: ^2.15.0
-  freezed: ^3.2.5
-  json_serializable: ^6.14.0
+  riverpod_generator: ^4.0.3
+  go_router_builder: ^4.3.0
+  flutter_native_splash: ^2.4.7
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -64,6 +64,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  # assets:
+  #   - assets/splash/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -95,3 +97,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_native_splash:
+  color: "#000000"
+  image: assets/splash/black.png
+  android: true
+  ios: true
+  web: false
+  android_12:
+    color: "#000000"
+    image: assets/splash/black.png
+    icon_background_color: "#000000"

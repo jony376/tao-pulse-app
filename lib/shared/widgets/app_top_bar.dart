@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import '../../core/theme/theme.dart';
+import '../../theme/theme.dart';
 
 class AppTopBar extends StatelessWidget {
   const AppTopBar({

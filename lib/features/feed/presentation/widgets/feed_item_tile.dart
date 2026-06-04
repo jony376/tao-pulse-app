@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/theme.dart';
+import '../../../../theme/theme.dart';
 import '../../models/feed_item.dart';
 
 class FeedItemTile extends StatelessWidget {

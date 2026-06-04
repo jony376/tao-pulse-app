@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/theme.dart';
+import '../../theme/theme.dart';
 
 class FeaturePlaceholder extends StatelessWidget {
   const FeaturePlaceholder({
