@@ -28,16 +28,20 @@ class SubnetsViewState {
 
     final items = filtered.toList();
     switch (sortOption) {
-      case SubnetSortOption.featured:
-        return items;
-      case SubnetSortOption.name:
-        items.sort((a, b) => a.name.compareTo(b.name));
-        return items;
-      case SubnetSortOption.price:
-        items.sort((a, b) => (b.price ?? 0).compareTo(a.price ?? 0));
+      case SubnetSortOption.subnetNumber:
+        items.sort((a, b) => a.netuid.compareTo(b.netuid));
         return items;
       case SubnetSortOption.marketCap:
         items.sort((a, b) => (b.marketCap ?? 0).compareTo(a.marketCap ?? 0));
+        return items;
+      case SubnetSortOption.alphaPrice:
+        items.sort((a, b) => (b.price ?? 0).compareTo(a.price ?? 0));
+        return items;
+      case SubnetSortOption.volume24h:
+        items.sort((a, b) => (b.volume24h ?? 0).compareTo(a.volume24h ?? 0));
+        return items;
+      case SubnetSortOption.emission:
+        items.sort((a, b) => (b.emission ?? 0).compareTo(a.emission ?? 0));
         return items;
     }
   }
