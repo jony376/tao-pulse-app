@@ -73,10 +73,7 @@ class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     return TabPageScaffold(
-      appBar: const TopBar(
-        left: _FeedTopBarIcon(),
-        right: SearchButton(),
-      ),
+      appBar: const TopBar(left: _FeedTopBarIcon(), right: SearchButton()),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -89,6 +86,12 @@ class _FeedPageState extends State<FeedPage> {
           const SizedBox(height: AppSpacing.lg * 2),
           Expanded(
             child: ListView.separated(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                0,
+                AppSpacing.lg,
+                AppSpacing.bottomNavClearance,
+              ),
               itemCount: _visibleCards.length,
               separatorBuilder: (context, index) =>
                   const SizedBox(height: AppSpacing.md),
