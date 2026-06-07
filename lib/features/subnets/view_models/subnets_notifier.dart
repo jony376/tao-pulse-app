@@ -22,7 +22,7 @@ class SubnetsNotifier extends _$SubnetsNotifier {
     return SubnetsViewState(
       filters: filters,
       selectedFilter: filters.first.type,
-      sortOption: SubnetSortOption.featured,
+      sortOption: SubnetSortOption.subnetNumber,
       subnets: subnets,
     );
   }
@@ -40,19 +40,11 @@ class SubnetsNotifier extends _$SubnetsNotifier {
     state = AsyncData(current.copyWith(selectedFilter: filter));
   }
 
-  void cycleSortOption() {
+  void setSortOption(SubnetSortOption sortOption) {
     final current = state.value;
-    if (current == null) {
+    if (current == null || current.sortOption == sortOption) {
       return;
     }
-
-    final next = switch (current.sortOption) {
-      SubnetSortOption.featured => SubnetSortOption.name,
-      SubnetSortOption.name => SubnetSortOption.price,
-      SubnetSortOption.price => SubnetSortOption.marketCap,
-      SubnetSortOption.marketCap => SubnetSortOption.featured,
-    };
-
-    state = AsyncData(current.copyWith(sortOption: next));
+    state = AsyncData(current.copyWith(sortOption: sortOption));
   }
 }

@@ -4,10 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../theme/theme.dart';
 import '../../../widgets/app_top_bar.dart';
 import '../../../widgets/tab_page_scaffold.dart';
+import '../models/subnet_sort_option.dart';
 import '../view_models/subnets_notifier.dart';
 import 'subnet_card.dart';
 import 'subnet_filter_bar.dart';
 import 'subnet_search_bar.dart';
+import 'subnet_sort_bottom_sheet.dart';
 
 class SubnetsPage extends ConsumerWidget {
   const SubnetsPage({super.key});
@@ -29,7 +31,8 @@ class SubnetsPage extends ConsumerWidget {
               filters: state.filters,
               selectedFilter: state.selectedFilter,
               onSelected: ref.read(subnetsProvider.notifier).selectFilter,
-              onSortPressed: ref.read(subnetsProvider.notifier).cycleSortOption,
+              onSortPressed: () =>
+                  _openSortSheet(context, ref, state.sortOption),
             ),
             const SizedBox(height: AppSpacing.md),
             Expanded(
@@ -86,5 +89,22 @@ class SubnetsPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _openSortSheet(
+    BuildContext context,
+    WidgetRef ref,
+    SubnetSortOption selectedSort,
+  ) async {
+    final selected = await showSubnetSortBottomSheet(
+      context,
+      selectedSort: selectedSort,
+    );
+
+    if (selected == null) {
+      return;
+    }
+
+    ref.read(subnetsProvider.notifier).setSortOption(selected);
   }
 }
