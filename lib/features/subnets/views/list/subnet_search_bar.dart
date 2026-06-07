@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/theme.dart';
-import '../../../widgets/buttons/search_button.dart';
+import '../../../../theme/theme.dart';
+import '../../../../widgets/buttons/search_button.dart';
 
 class SubnetSearchBar extends StatelessWidget {
   const SubnetSearchBar({
