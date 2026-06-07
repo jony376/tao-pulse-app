@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../app/app_router.dart';
 import '../../../../theme/theme.dart';
 import '../../../../widgets/app_top_bar.dart';
 import '../../../../widgets/tab_page_scaffold.dart';
@@ -49,8 +50,13 @@ class SubnetsPage extends ConsumerWidget {
                   itemCount: state.visibleSubnets.length,
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 9),
-                  itemBuilder: (context, index) =>
-                      SubnetCard(data: state.visibleSubnets[index]),
+                  itemBuilder: (context, index) => SubnetCard(
+                    data: state.visibleSubnets[index],
+                    onTap: () => SubnetDetailRoute(
+                      netuid: state.visibleSubnets[index].netuid,
+                      $extra: state.visibleSubnets[index],
+                    ).push(context),
+                  ),
                 ),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import 'page_transition.dart';
 
 class AppTheme {
   static ThemeData get dark {
@@ -9,6 +10,7 @@ class AppTheme {
       brightness: Brightness.dark,
       scaffoldBackgroundColor: Colors.black,
       canvasColor: Colors.black,
+      pageTransitionsTheme: AppPageTransitions.theme,
       colorScheme: const ColorScheme.dark(
         primary: Colors.white,
         secondary: Colors.white,
