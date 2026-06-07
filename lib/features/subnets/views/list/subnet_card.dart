@@ -5,110 +5,123 @@ import '../../../../theme/theme.dart';
 import '../../../../widgets/surface_card.dart';
 
 class SubnetCard extends StatelessWidget {
-  const SubnetCard({super.key, required this.data});
+  const SubnetCard({super.key, required this.data, this.onTap});
 
   final Subnet data;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final categoryLabel = data.category ?? 'Uncategorized';
 
-    return SurfaceCard(
-      padding: const EdgeInsets.fromLTRB(19, 10, 19, 10),
-      borderRadius: AppRadius.xxl,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 10,
-                ),
-                decoration: BoxDecoration(
-                  color: FigmaColors.neutralPrimary,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(
-                    color: FigmaColors.iconNeutralInverseTertiary,
-                  ),
-                ),
-                child: Text(
-                  'SN ${data.netuid}',
-                  style: FigmaTypography.compactBodySmallMedium.copyWith(
-                    color: FigmaColors.textNeutralPrimary,
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.lg),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return Material(
+      color: Colors.transparent,
+      clipBehavior: Clip.antiAlias,
+      borderRadius: BorderRadius.circular(AppRadius.xxl),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.xxl),
+        child: RepaintBoundary(
+          child: SurfaceCard(
+            padding: const EdgeInsets.fromLTRB(19, 10, 19, 10),
+            borderRadius: AppRadius.xxl,
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Text(
-                      data.name,
-                      style: FigmaTypography.h7Semibold.copyWith(
-                        color: FigmaColors.textNeutralPrimary,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: FigmaColors.neutralPrimary,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: FigmaColors.iconNeutralInverseTertiary,
+                        ),
+                      ),
+                      child: Text(
+                        'SN ${data.netuid}',
+                        style: FigmaTypography.compactBodySmallMedium.copyWith(
+                          color: FigmaColors.textNeutralPrimary,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      categoryLabel,
-                      style: FigmaTypography.compactBodySmallMedium.copyWith(
-                        color: FigmaColors.textNeutralInversePrimary,
+                    const SizedBox(width: AppSpacing.lg),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data.name,
+                            style: FigmaTypography.h7Semibold.copyWith(
+                              color: FigmaColors.textNeutralPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.xs),
+                          Text(
+                            categoryLabel,
+                            style: FigmaTypography.compactBodySmallMedium
+                                .copyWith(
+                                  color: FigmaColors.textNeutralInversePrimary,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        color: FigmaColors.neutralSecondary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        data.watching ? Icons.favorite : Icons.favorite_border,
+                        size: 18,
+                        color: data.watching
+                            ? FigmaColors.brandSecondary
+                            : FigmaColors.iconNeutralPrimary,
                       ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(width: AppSpacing.sm),
-              Container(
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
+                const SizedBox(height: 18),
+                const Divider(
+                  height: 1,
+                  thickness: 1,
                   color: FigmaColors.neutralSecondary,
-                  shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  data.watching ? Icons.favorite : Icons.favorite_border,
-                  size: 18,
-                  color: data.watching
-                      ? FigmaColors.brandSecondary
-                      : FigmaColors.iconNeutralPrimary,
+                const SizedBox(height: 18),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _MetricColumn(
+                      label: 'Price',
+                      value: _formatPrice(data.price),
+                      trend: _formatPercent(data.priceTrend),
+                      trendColor: FigmaColors.textSuccessSubtle,
+                    ),
+                    _MetricColumn(
+                      label: 'Mkt Cap',
+                      value: _formatTao(data.marketCap),
+                    ),
+                    _MetricColumn(
+                      label: '24h Volume',
+                      value: _formatUsd(data.volume24h),
+                    ),
+                    _MetricColumn(
+                      label: 'emission',
+                      value: _formatPercent(data.emission),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: 18),
-          const Divider(
-            height: 1,
-            thickness: 1,
-            color: FigmaColors.neutralSecondary,
-          ),
-          const SizedBox(height: 18),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _MetricColumn(
-                label: 'Price',
-                value: _formatPrice(data.price),
-                trend: _formatPercent(data.priceTrend),
-                trendColor: FigmaColors.textSuccessSubtle,
-              ),
-              _MetricColumn(
-                label: 'Mkt Cap',
-                value: _formatTao(data.marketCap),
-              ),
-              _MetricColumn(
-                label: '24h Volume',
-                value: _formatUsd(data.volume24h),
-              ),
-              _MetricColumn(
-                label: 'emission',
-                value: _formatPercent(data.emission),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }
