@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/theme.dart';
 import '../../feed/views/feed_page.dart';
-import '../../subnets/views/subnets_page.dart';
+import '../../subnets/views/list/subnets_page.dart';
 
 class HomeRootPage extends StatefulWidget {
   const HomeRootPage({super.key});

@@ -36,7 +36,13 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: NavigationToolbar(
-              leading: left,
+              leading: left == null
+                  ? null
+                  : Align(
+                      alignment: Alignment.centerLeft,
+                      widthFactor: 1,
+                      child: left,
+                    ),
               middle: title == null
                   ? null
                   : Text(
@@ -48,7 +54,13 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                         color: FigmaColors.textNeutralPrimary,
                       ),
                     ),
-              trailing: right,
+              trailing: right == null
+                  ? null
+                  : Align(
+                      alignment: Alignment.centerRight,
+                      widthFactor: 1,
+                      child: right,
+                    ),
               centerMiddle: true,
               middleSpacing: middleSpacing,
             ),
