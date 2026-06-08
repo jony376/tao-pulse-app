@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../../models/subnet.dart';
+import '../../models/subnet_info.dart';
 import '../../../../theme/theme.dart';
 import '../../../../widgets/surface_card.dart';
 
-class SubnetCard extends StatelessWidget {
-  const SubnetCard({super.key, required this.data, this.onTap});
+class SubnetListItem extends StatelessWidget {
+  const SubnetListItem({super.key, required this.data, this.onTap});
 
-  final Subnet data;
+  final SubnetInfo data;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final categoryLabel = data.category ?? 'Uncategorized';
+    final subnet = data.subnet;
+    final categoryLabel = subnet.category ?? 'Uncategorized';
+    final market = data.market;
 
     return Material(
       color: Colors.transparent,
@@ -42,7 +44,7 @@ class SubnetCard extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'SN ${data.netuid}',
+                        'SN ${subnet.netuid}',
                         style: FigmaTypography.compactBodySmallMedium.copyWith(
                           color: FigmaColors.textNeutralPrimary,
                         ),
@@ -54,7 +56,7 @@ class SubnetCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            data.name,
+                            subnet.name,
                             style: FigmaTypography.h7Semibold.copyWith(
                               color: FigmaColors.textNeutralPrimary,
                             ),
@@ -79,9 +81,11 @@ class SubnetCard extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        data.watching ? Icons.favorite : Icons.favorite_border,
+                        subnet.watching
+                            ? Icons.favorite
+                            : Icons.favorite_border,
                         size: 18,
-                        color: data.watching
+                        color: subnet.watching
                             ? FigmaColors.brandSecondary
                             : FigmaColors.iconNeutralPrimary,
                       ),
@@ -100,21 +104,21 @@ class SubnetCard extends StatelessWidget {
                   children: [
                     _MetricColumn(
                       label: 'Price',
-                      value: _formatPrice(data.price),
-                      trend: _formatPercent(data.priceTrend),
+                      value: _formatPrice(market.price),
+                      trend: _formatPercent(market.priceTrend),
                       trendColor: FigmaColors.textSuccessSubtle,
                     ),
                     _MetricColumn(
                       label: 'Mkt Cap',
-                      value: _formatTao(data.marketCap),
+                      value: _formatTao(market.marketCap),
                     ),
                     _MetricColumn(
                       label: '24h Volume',
-                      value: _formatUsd(data.volume24h),
+                      value: _formatUsd(market.volume24h),
                     ),
                     _MetricColumn(
                       label: 'emission',
-                      value: _formatPercent(data.emission),
+                      value: _formatPercent(market.emission),
                     ),
                   ],
                 ),

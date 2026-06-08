@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/home/views/home.dart';
-import '../features/subnets/models/subnet.dart';
+import '../features/subnets/models/subnet_info.dart';
 import '../features/subnets/views/detail/subnet_detail.dart';
 import '../features/splash/views/splash_page.dart';
 import '../features/onboarding/views/onboarding_page.dart';
@@ -53,7 +53,7 @@ class SubnetDetailRoute extends GoRouteData with $SubnetDetailRoute {
   const SubnetDetailRoute({required this.netuid, required this.$extra});
 
   final int netuid;
-  final Subnet $extra;
+  final SubnetInfo $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {

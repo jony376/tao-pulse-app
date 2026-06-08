@@ -7,11 +7,6 @@ class Subnet {
     required this.description,
     required this.alphaToken,
     this.category,
-    this.price,
-    this.priceTrend,
-    this.marketCap,
-    this.volume24h,
-    this.emission,
     this.filterTags = const [],
     this.watching = false,
   });
@@ -21,11 +16,6 @@ class Subnet {
   final String description;
   final String alphaToken;
   final String? category;
-  final double? price;
-  final double? priceTrend;
-  final double? marketCap;
-  final double? volume24h;
-  final double? emission;
   final List<SubnetFilterType> filterTags;
   final bool watching;
 }
