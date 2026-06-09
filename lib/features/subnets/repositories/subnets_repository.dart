@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../models/subnet_filter.dart';
 import '../models/subnet.dart';
+import '../models/subnet_filter.dart';
 import '../models/subnet_info.dart';
 import '../models/subnet_metrics.dart';
 
@@ -87,15 +87,23 @@ class SubnetsRepository {
           validatorLimit: 64,
           minerCount: 46,
         ),
+        miners: const SubnetMiners(
+          activeMiners: 12,
+          totalMinerSlots: 64,
+          registrationLabel: 'OPEN',
+          competitionLabel: 'Competitive',
+          estimatedDailyEarnAlpha: 2.4,
+          hardwareNeeded: 'A100 / H100',
+        ),
         feed: const SubnetFeed(
           recentSignals: [
             SubnetSignal(
-              message: 'User @cryptoNinja swapped 500 τ for ETH on TauDEX',
+              message: 'User @cryptoNinja swapped 500 TAO for ETH on TauDEX',
               timeAgo: '30m ago',
               dotColor: 'success',
             ),
             SubnetSignal(
-              message: 'New tau wallet created with 1,000 τ balance',
+              message: 'New tau wallet created with 1,000 TAO balance',
               timeAgo: '2h ago',
               dotColor: 'warning',
             ),
@@ -110,7 +118,7 @@ class SubnetsRepository {
               dotColor: 'success',
             ),
             SubnetSignal(
-              message: 'Auction bid placed: 750 τ for rare NFT #4567',
+              message: 'Auction bid placed: 750 TAO for rare NFT #4567',
               timeAgo: '45m ago',
               dotColor: 'warning',
             ),
@@ -174,6 +182,14 @@ class SubnetsRepository {
           validatorCount: 10,
           validatorLimit: 64,
           minerCount: 42,
+        ),
+        miners: const SubnetMiners(
+          activeMiners: 10,
+          totalMinerSlots: 64,
+          registrationLabel: 'OPEN',
+          competitionLabel: 'Moderate',
+          estimatedDailyEarnAlpha: 1.7,
+          hardwareNeeded: 'L40S / A100',
         ),
         feed: const SubnetFeed(
           recentSignals: [
@@ -253,6 +269,14 @@ class SubnetsRepository {
           validatorLimit: 64,
           minerCount: 51,
         ),
+        miners: const SubnetMiners(
+          activeMiners: 14,
+          totalMinerSlots: 64,
+          registrationLabel: 'OPEN',
+          competitionLabel: 'High',
+          estimatedDailyEarnAlpha: 3.1,
+          hardwareNeeded: 'H100 / B200',
+        ),
         feed: const SubnetFeed(
           recentSignals: [
             SubnetSignal(
@@ -330,6 +354,14 @@ class SubnetsRepository {
           validatorCount: 9,
           validatorLimit: 64,
           minerCount: 38,
+        ),
+        miners: const SubnetMiners(
+          activeMiners: 9,
+          totalMinerSlots: 64,
+          registrationLabel: 'CLOSED',
+          competitionLabel: 'Low',
+          estimatedDailyEarnAlpha: 0.9,
+          hardwareNeeded: 'A10 / L4',
         ),
         feed: const SubnetFeed(
           recentSignals: [
