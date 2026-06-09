@@ -78,6 +78,13 @@ String formatIntegerCompact(int? value) {
   return value.toString();
 }
 
+String? formatAlphaPerDay(double? value, {String symbol = 'alpha'}) {
+  if (value == null) {
+    return null;
+  }
+  return '~${value.toStringAsFixed(1)} $symbol / day';
+}
+
 String _formatCompactNumber(double value) {
   final absolute = value.abs();
   if (absolute >= 1000000) {

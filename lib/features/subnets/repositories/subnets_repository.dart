@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../models/subnet_filter.dart';
 import '../models/subnet.dart';
+import '../models/subnet_filter.dart';
 import '../models/subnet_info.dart';
 import '../models/subnet_metrics.dart';
 
@@ -115,6 +115,43 @@ class SubnetsRepository {
             ),
           ],
         ),
+        miners: const SubnetMiners(
+          activeMiners: 12,
+          totalMinerSlots: 64,
+          registrationLabel: 'OPEN',
+          competitionLabel: 'Competitive',
+          estimatedDailyEarnAlpha: 2.4,
+          hardwareNeeded: 'A100 / H100',
+        ),
+        feed: const SubnetFeed(
+          recentSignals: [
+            SubnetSignal(
+              message: 'User @cryptoNinja swapped 500 TAO for ETH on TauDEX',
+              timeAgo: '30m ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'New tau wallet created with 1,000 TAO balance',
+              timeAgo: '2h ago',
+              dotColor: 'warning',
+            ),
+            SubnetSignal(
+              message: 'Validator node #23 confirmed 100 blocks successfully',
+              timeAgo: '1h 15m ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'Governance proposal #12 passed with 85% approval',
+              timeAgo: '3h ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'Auction bid placed: 750 TAO for rare NFT #4567',
+              timeAgo: '45m ago',
+              dotColor: 'warning',
+            ),
+          ],
+        ),
       ),
       SubnetInfo(
         subnet: const Subnet(
@@ -199,6 +236,33 @@ class SubnetsRepository {
               name: 'Signal Mesh',
               takePercent: 6,
               stakeTao: 860,
+            ),
+          ],
+        ),
+        miners: const SubnetMiners(
+          activeMiners: 10,
+          totalMinerSlots: 64,
+          registrationLabel: 'OPEN',
+          competitionLabel: 'Moderate',
+          estimatedDailyEarnAlpha: 1.7,
+          hardwareNeeded: 'L40S / A100',
+        ),
+        feed: const SubnetFeed(
+          recentSignals: [
+            SubnetSignal(
+              message: 'Targon subnet treasury distributed validator rewards',
+              timeAgo: '25m ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'Large alpha transfer detected to cold wallet',
+              timeAgo: '1h ago',
+              dotColor: 'warning',
+            ),
+            SubnetSignal(
+              message: 'Subnet update proposal moved to final review',
+              timeAgo: '2h ago',
+              dotColor: 'success',
             ),
           ],
         ),
@@ -289,6 +353,33 @@ class SubnetsRepository {
             ),
           ],
         ),
+        miners: const SubnetMiners(
+          activeMiners: 14,
+          totalMinerSlots: 64,
+          registrationLabel: 'OPEN',
+          competitionLabel: 'High',
+          estimatedDailyEarnAlpha: 3.1,
+          hardwareNeeded: 'H100 / B200',
+        ),
+        feed: const SubnetFeed(
+          recentSignals: [
+            SubnetSignal(
+              message: 'Inference queue latency dropped below target threshold',
+              timeAgo: '12m ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'Top miner rotated hardware allocation to H100 pool',
+              timeAgo: '55m ago',
+              dotColor: 'warning',
+            ),
+            SubnetSignal(
+              message: 'Subnet emissions report posted to governance feed',
+              timeAgo: '4h ago',
+              dotColor: 'success',
+            ),
+          ],
+        ),
       ),
       SubnetInfo(
         subnet: const Subnet(
@@ -373,6 +464,33 @@ class SubnetsRepository {
               name: 'Trace Ops',
               takePercent: 4,
               stakeTao: 540,
+            ),
+          ],
+        ),
+        miners: const SubnetMiners(
+          activeMiners: 9,
+          totalMinerSlots: 64,
+          registrationLabel: 'CLOSED',
+          competitionLabel: 'Low',
+          estimatedDailyEarnAlpha: 0.9,
+          hardwareNeeded: 'A10 / L4',
+        ),
+        feed: const SubnetFeed(
+          recentSignals: [
+            SubnetSignal(
+              message: 'Cortex validator cluster entered maintenance mode',
+              timeAgo: '40m ago',
+              dotColor: 'warning',
+            ),
+            SubnetSignal(
+              message: 'Trust score audit completed with no anomalies',
+              timeAgo: '2h ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'Subnet registration remains closed this epoch',
+              timeAgo: '6h ago',
+              dotColor: 'warning',
             ),
           ],
         ),

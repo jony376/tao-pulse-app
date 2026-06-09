@@ -81,3 +81,39 @@ class SubnetTopValidator {
   final double? takePercent;
   final double? stakeTao;
 }
+
+class SubnetMiners {
+  const SubnetMiners({
+    this.activeMiners,
+    this.totalMinerSlots,
+    this.registrationLabel,
+    this.competitionLabel,
+    this.estimatedDailyEarnAlpha,
+    this.hardwareNeeded,
+  });
+
+  final int? activeMiners;
+  final int? totalMinerSlots;
+  final String? registrationLabel;
+  final String? competitionLabel;
+  final double? estimatedDailyEarnAlpha;
+  final String? hardwareNeeded;
+}
+
+class SubnetFeed {
+  const SubnetFeed({this.recentSignals = const []});
+
+  final List<SubnetSignal> recentSignals;
+}
+
+class SubnetSignal {
+  const SubnetSignal({
+    required this.message,
+    required this.timeAgo,
+    required this.dotColor,
+  });
+
+  final String message;
+  final String timeAgo;
+  final String dotColor;
+}

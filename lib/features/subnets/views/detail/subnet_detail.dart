@@ -6,10 +6,12 @@ import '../../../../widgets/app_top_bar.dart';
 import '../../../../widgets/buttons/app_back_button.dart';
 import '../../../../widgets/buttons/app_icon_button.dart';
 import '../../../../widgets/tab_page_scaffold.dart';
+import 'subnet_feed_tab.dart';
 import 'subnet_info_section.dart';
 import 'subnet_market_tab.dart';
 import 'subnet_metric_tabs.dart';
 import 'subnet_stakers_tab.dart';
+import 'subnet_miners_tab.dart';
 
 class SubnetDetailPage extends StatefulWidget {
   const SubnetDetailPage({super.key, required this.data});
@@ -69,16 +71,8 @@ class _SubnetDetailPageState extends State<SubnetDetailPage> {
                       setState(() => _selectedRange = range),
                 ),
                 SubnetPrimaryTab.stakers => SubnetStakersTab(data: subnetInfo),
-                SubnetPrimaryTab.miners => const _DetailPlaceholder(
-                  title: 'Miners',
-                  description:
-                      'Miner activity and rankings will appear here once this view is connected.',
-                ),
-                SubnetPrimaryTab.feed => const _DetailPlaceholder(
-                  title: 'Feed',
-                  description:
-                      'Subnet feed updates will appear here once this view is connected.',
-                ),
+                SubnetPrimaryTab.miners => SubnetMinersTab(data: subnetInfo),
+                SubnetPrimaryTab.feed => SubnetFeedTab(data: subnetInfo),
               },
             ),
           ),
@@ -119,43 +113,6 @@ class _SubnetDetailTopBarActions extends StatelessWidget {
           icon: const Icon(Icons.notifications_none_rounded),
         ),
       ],
-    );
-  }
-}
-
-class _DetailPlaceholder extends StatelessWidget {
-  const _DetailPlaceholder({required this.title, required this.description});
-
-  final String title;
-  final String description;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.xl),
-      decoration: BoxDecoration(
-        color: FigmaColors.neutralPrimary,
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: FigmaColors.neutralSecondary),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: FigmaTypography.h7Semibold.copyWith(
-              color: FigmaColors.textNeutralPrimary,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            description,
-            style: FigmaTypography.compactBodySmallRegular.copyWith(
-              color: FigmaColors.textNeutralTertiary,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
