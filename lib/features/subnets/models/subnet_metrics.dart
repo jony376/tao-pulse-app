@@ -47,3 +47,21 @@ class SubnetNetwork {
   final int? validatorLimit;
   final int? minerCount;
 }
+
+class SubnetFeed {
+  const SubnetFeed({this.recentSignals = const []});
+
+  final List<SubnetSignal> recentSignals;
+}
+
+class SubnetSignal {
+  const SubnetSignal({
+    required this.message,
+    required this.timeAgo,
+    required this.dotColor,
+  });
+
+  final String message;
+  final String timeAgo;
+  final String dotColor;
+}
