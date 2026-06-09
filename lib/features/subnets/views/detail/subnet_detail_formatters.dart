@@ -19,6 +19,13 @@ String? formatPercentPrecise(double? value) {
   return '${value.toStringAsFixed(2)}%';
 }
 
+String? formatPercentWhole(double? value) {
+  if (value == null) {
+    return null;
+  }
+  return '${value.toStringAsFixed(0)}%';
+}
+
 String? formatTaoCompact(double? value) {
   if (value == null) {
     return null;
@@ -48,6 +55,20 @@ String? formatUsdRegular(double? value) {
     return '\$${value.toStringAsFixed(0)}';
   }
   return '\$${value.toStringAsFixed(2)}';
+}
+
+String? formatEstimatedValidator(double? epochTau, double? jValue) {
+  if (epochTau == null || jValue == null) {
+    return null;
+  }
+  return 'epoch≈ ${epochTau.toStringAsFixed(3)} τ / J ${jValue.toStringAsFixed(2)}';
+}
+
+String? formatValidatorTake(double? value) {
+  if (value == null) {
+    return null;
+  }
+  return '${value.toStringAsFixed(0)}% take';
 }
 
 String formatIntegerCompact(int? value) {

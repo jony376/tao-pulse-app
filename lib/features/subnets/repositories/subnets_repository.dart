@@ -87,6 +87,34 @@ class SubnetsRepository {
           validatorLimit: 64,
           minerCount: 46,
         ),
+        stakers: const SubnetStakers(
+          validatorSlotsFilled: 12,
+          validatorSlotsTotal: 64,
+          registrationLabel: 'OPEN',
+          stakerApyPercent: 2893,
+          estimatedValidatorEpochTau: 0.058,
+          estimatedValidatorJ: 11.14,
+          topValidators: [
+            SubnetTopValidator(
+              rank: 1,
+              name: 'Foundry USA',
+              takePercent: 8,
+              stakeTao: 1200,
+            ),
+            SubnetTopValidator(
+              rank: 2,
+              name: 'PixelForge',
+              takePercent: 12,
+              stakeTao: 2500,
+            ),
+            SubnetTopValidator(
+              rank: 3,
+              name: 'CraftWorks',
+              takePercent: 5,
+              stakeTao: 900,
+            ),
+          ],
+        ),
       ),
       SubnetInfo(
         subnet: const Subnet(
@@ -145,6 +173,34 @@ class SubnetsRepository {
           validatorCount: 10,
           validatorLimit: 64,
           minerCount: 42,
+        ),
+        stakers: const SubnetStakers(
+          validatorSlotsFilled: 10,
+          validatorSlotsTotal: 64,
+          registrationLabel: 'OPEN',
+          stakerApyPercent: 1740,
+          estimatedValidatorEpochTau: 0.047,
+          estimatedValidatorJ: 9.84,
+          topValidators: [
+            SubnetTopValidator(
+              rank: 1,
+              name: 'Deep Harbor',
+              takePercent: 7,
+              stakeTao: 1500,
+            ),
+            SubnetTopValidator(
+              rank: 2,
+              name: 'Aster Labs',
+              takePercent: 10,
+              stakeTao: 1100,
+            ),
+            SubnetTopValidator(
+              rank: 3,
+              name: 'Signal Mesh',
+              takePercent: 6,
+              stakeTao: 860,
+            ),
+          ],
         ),
       ),
       SubnetInfo(
@@ -205,6 +261,34 @@ class SubnetsRepository {
           validatorLimit: 64,
           minerCount: 51,
         ),
+        stakers: const SubnetStakers(
+          validatorSlotsFilled: 14,
+          validatorSlotsTotal: 64,
+          registrationLabel: 'OPEN',
+          stakerApyPercent: 3121,
+          estimatedValidatorEpochTau: 0.063,
+          estimatedValidatorJ: 12.02,
+          topValidators: [
+            SubnetTopValidator(
+              rank: 1,
+              name: 'Vertex Node',
+              takePercent: 9,
+              stakeTao: 2200,
+            ),
+            SubnetTopValidator(
+              rank: 2,
+              name: 'Ion Core',
+              takePercent: 11,
+              stakeTao: 1900,
+            ),
+            SubnetTopValidator(
+              rank: 3,
+              name: 'Flux Capital',
+              takePercent: 7,
+              stakeTao: 1300,
+            ),
+          ],
+        ),
       ),
       SubnetInfo(
         subnet: const Subnet(
@@ -263,6 +347,34 @@ class SubnetsRepository {
           validatorCount: 9,
           validatorLimit: 64,
           minerCount: 38,
+        ),
+        stakers: const SubnetStakers(
+          validatorSlotsFilled: 9,
+          validatorSlotsTotal: 64,
+          registrationLabel: 'CLOSED',
+          stakerApyPercent: 1284,
+          estimatedValidatorEpochTau: 0.031,
+          estimatedValidatorJ: 7.48,
+          topValidators: [
+            SubnetTopValidator(
+              rank: 1,
+              name: 'Chain Atlas',
+              takePercent: 5,
+              stakeTao: 980,
+            ),
+            SubnetTopValidator(
+              rank: 2,
+              name: 'Northwind',
+              takePercent: 8,
+              stakeTao: 760,
+            ),
+            SubnetTopValidator(
+              rank: 3,
+              name: 'Trace Ops',
+              takePercent: 4,
+              stakeTao: 540,
+            ),
+          ],
         ),
       ),
     ];

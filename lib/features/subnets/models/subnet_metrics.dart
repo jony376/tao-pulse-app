@@ -47,3 +47,37 @@ class SubnetNetwork {
   final int? validatorLimit;
   final int? minerCount;
 }
+
+class SubnetStakers {
+  const SubnetStakers({
+    this.validatorSlotsFilled,
+    this.validatorSlotsTotal,
+    this.registrationLabel,
+    this.stakerApyPercent,
+    this.estimatedValidatorEpochTau,
+    this.estimatedValidatorJ,
+    this.topValidators = const [],
+  });
+
+  final int? validatorSlotsFilled;
+  final int? validatorSlotsTotal;
+  final String? registrationLabel;
+  final double? stakerApyPercent;
+  final double? estimatedValidatorEpochTau;
+  final double? estimatedValidatorJ;
+  final List<SubnetTopValidator> topValidators;
+}
+
+class SubnetTopValidator {
+  const SubnetTopValidator({
+    required this.rank,
+    required this.name,
+    this.takePercent,
+    this.stakeTao,
+  });
+
+  final int rank;
+  final String name;
+  final double? takePercent;
+  final double? stakeTao;
+}

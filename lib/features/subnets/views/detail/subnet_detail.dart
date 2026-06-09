@@ -9,6 +9,7 @@ import '../../../../widgets/tab_page_scaffold.dart';
 import 'subnet_info_section.dart';
 import 'subnet_market_tab.dart';
 import 'subnet_metric_tabs.dart';
+import 'subnet_stakers_tab.dart';
 
 class SubnetDetailPage extends StatefulWidget {
   const SubnetDetailPage({super.key, required this.data});
@@ -67,11 +68,7 @@ class _SubnetDetailPageState extends State<SubnetDetailPage> {
                   onRangeSelected: (range) =>
                       setState(() => _selectedRange = range),
                 ),
-                SubnetPrimaryTab.stakers => const _DetailPlaceholder(
-                  title: 'Stakers',
-                  description:
-                      'Staker analytics will appear here once this view is connected.',
-                ),
+                SubnetPrimaryTab.stakers => SubnetStakersTab(data: subnetInfo),
                 SubnetPrimaryTab.miners => const _DetailPlaceholder(
                   title: 'Miners',
                   description:
@@ -127,10 +124,7 @@ class _SubnetDetailTopBarActions extends StatelessWidget {
 }
 
 class _DetailPlaceholder extends StatelessWidget {
-  const _DetailPlaceholder({
-    required this.title,
-    required this.description,
-  });
+  const _DetailPlaceholder({required this.title, required this.description});
 
   final String title;
   final String description;
