@@ -87,6 +87,14 @@ class SubnetsRepository {
           validatorLimit: 64,
           minerCount: 46,
         ),
+        miners: const SubnetMiners(
+          activeMiners: 12,
+          totalMinerSlots: 64,
+          registrationLabel: 'OPEN',
+          competitionLabel: 'Competitive',
+          estimatedDailyEarnAlpha: 2.4,
+          hardwareNeeded: 'A100 / H100',
+        ),
       ),
       SubnetInfo(
         subnet: const Subnet(
@@ -145,6 +153,14 @@ class SubnetsRepository {
           validatorCount: 10,
           validatorLimit: 64,
           minerCount: 42,
+        ),
+        miners: const SubnetMiners(
+          activeMiners: 10,
+          totalMinerSlots: 64,
+          registrationLabel: 'OPEN',
+          competitionLabel: 'Moderate',
+          estimatedDailyEarnAlpha: 1.7,
+          hardwareNeeded: 'L40S / A100',
         ),
       ),
       SubnetInfo(
@@ -205,6 +221,14 @@ class SubnetsRepository {
           validatorLimit: 64,
           minerCount: 51,
         ),
+        miners: const SubnetMiners(
+          activeMiners: 14,
+          totalMinerSlots: 64,
+          registrationLabel: 'OPEN',
+          competitionLabel: 'High',
+          estimatedDailyEarnAlpha: 3.1,
+          hardwareNeeded: 'H100 / B200',
+        ),
       ),
       SubnetInfo(
         subnet: const Subnet(
@@ -263,6 +287,14 @@ class SubnetsRepository {
           validatorCount: 9,
           validatorLimit: 64,
           minerCount: 38,
+        ),
+        miners: const SubnetMiners(
+          activeMiners: 9,
+          totalMinerSlots: 64,
+          registrationLabel: 'CLOSED',
+          competitionLabel: 'Low',
+          estimatedDailyEarnAlpha: 0.9,
+          hardwareNeeded: 'A10 / L4',
         ),
       ),
     ];

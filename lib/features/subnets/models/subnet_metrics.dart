@@ -47,3 +47,21 @@ class SubnetNetwork {
   final int? validatorLimit;
   final int? minerCount;
 }
+
+class SubnetMiners {
+  const SubnetMiners({
+    this.activeMiners,
+    this.totalMinerSlots,
+    this.registrationLabel,
+    this.competitionLabel,
+    this.estimatedDailyEarnAlpha,
+    this.hardwareNeeded,
+  });
+
+  final int? activeMiners;
+  final int? totalMinerSlots;
+  final String? registrationLabel;
+  final String? competitionLabel;
+  final double? estimatedDailyEarnAlpha;
+  final String? hardwareNeeded;
+}
