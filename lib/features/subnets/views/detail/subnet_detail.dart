@@ -6,6 +6,7 @@ import '../../../../widgets/app_top_bar.dart';
 import '../../../../widgets/buttons/app_back_button.dart';
 import '../../../../widgets/buttons/app_icon_button.dart';
 import '../../../../widgets/tab_page_scaffold.dart';
+import 'subnet_feed_tab.dart';
 import 'subnet_info_section.dart';
 import 'subnet_market_tab.dart';
 import 'subnet_metric_tabs.dart';
@@ -74,11 +75,7 @@ class _SubnetDetailPageState extends State<SubnetDetailPage> {
                       'Staker analytics will appear here once this view is connected.',
                 ),
                 SubnetPrimaryTab.miners => SubnetMinersTab(data: subnetInfo),
-                SubnetPrimaryTab.feed => const _DetailPlaceholder(
-                  title: 'Feed',
-                  description:
-                      'Subnet feed updates will appear here once this view is connected.',
-                ),
+                SubnetPrimaryTab.feed => SubnetFeedTab(data: subnetInfo),
               },
             ),
           ),
