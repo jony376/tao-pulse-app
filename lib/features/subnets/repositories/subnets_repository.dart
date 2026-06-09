@@ -87,6 +87,35 @@ class SubnetsRepository {
           validatorLimit: 64,
           minerCount: 46,
         ),
+        feed: const SubnetFeed(
+          recentSignals: [
+            SubnetSignal(
+              message: 'User @cryptoNinja swapped 500 τ for ETH on TauDEX',
+              timeAgo: '30m ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'New tau wallet created with 1,000 τ balance',
+              timeAgo: '2h ago',
+              dotColor: 'warning',
+            ),
+            SubnetSignal(
+              message: 'Validator node #23 confirmed 100 blocks successfully',
+              timeAgo: '1h 15m ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'Governance proposal #12 passed with 85% approval',
+              timeAgo: '3h ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'Auction bid placed: 750 τ for rare NFT #4567',
+              timeAgo: '45m ago',
+              dotColor: 'warning',
+            ),
+          ],
+        ),
       ),
       SubnetInfo(
         subnet: const Subnet(
@@ -145,6 +174,25 @@ class SubnetsRepository {
           validatorCount: 10,
           validatorLimit: 64,
           minerCount: 42,
+        ),
+        feed: const SubnetFeed(
+          recentSignals: [
+            SubnetSignal(
+              message: 'Targon subnet treasury distributed validator rewards',
+              timeAgo: '25m ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'Large alpha transfer detected to cold wallet',
+              timeAgo: '1h ago',
+              dotColor: 'warning',
+            ),
+            SubnetSignal(
+              message: 'Subnet update proposal moved to final review',
+              timeAgo: '2h ago',
+              dotColor: 'success',
+            ),
+          ],
         ),
       ),
       SubnetInfo(
@@ -205,6 +253,25 @@ class SubnetsRepository {
           validatorLimit: 64,
           minerCount: 51,
         ),
+        feed: const SubnetFeed(
+          recentSignals: [
+            SubnetSignal(
+              message: 'Inference queue latency dropped below target threshold',
+              timeAgo: '12m ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'Top miner rotated hardware allocation to H100 pool',
+              timeAgo: '55m ago',
+              dotColor: 'warning',
+            ),
+            SubnetSignal(
+              message: 'Subnet emissions report posted to governance feed',
+              timeAgo: '4h ago',
+              dotColor: 'success',
+            ),
+          ],
+        ),
       ),
       SubnetInfo(
         subnet: const Subnet(
@@ -263,6 +330,25 @@ class SubnetsRepository {
           validatorCount: 9,
           validatorLimit: 64,
           minerCount: 38,
+        ),
+        feed: const SubnetFeed(
+          recentSignals: [
+            SubnetSignal(
+              message: 'Cortex validator cluster entered maintenance mode',
+              timeAgo: '40m ago',
+              dotColor: 'warning',
+            ),
+            SubnetSignal(
+              message: 'Trust score audit completed with no anomalies',
+              timeAgo: '2h ago',
+              dotColor: 'success',
+            ),
+            SubnetSignal(
+              message: 'Subnet registration remains closed this epoch',
+              timeAgo: '6h ago',
+              dotColor: 'warning',
+            ),
+          ],
         ),
       ),
     ];

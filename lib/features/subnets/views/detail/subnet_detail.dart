@@ -6,6 +6,7 @@ import '../../../../widgets/app_top_bar.dart';
 import '../../../../widgets/buttons/app_back_button.dart';
 import '../../../../widgets/buttons/app_icon_button.dart';
 import '../../../../widgets/tab_page_scaffold.dart';
+import 'subnet_feed_tab.dart';
 import 'subnet_info_section.dart';
 import 'subnet_market_tab.dart';
 import 'subnet_metric_tabs.dart';
@@ -77,11 +78,7 @@ class _SubnetDetailPageState extends State<SubnetDetailPage> {
                   description:
                       'Miner activity and rankings will appear here once this view is connected.',
                 ),
-                SubnetPrimaryTab.feed => const _DetailPlaceholder(
-                  title: 'Feed',
-                  description:
-                      'Subnet feed updates will appear here once this view is connected.',
-                ),
+                SubnetPrimaryTab.feed => SubnetFeedTab(data: subnetInfo),
               },
             ),
           ),
@@ -127,10 +124,7 @@ class _SubnetDetailTopBarActions extends StatelessWidget {
 }
 
 class _DetailPlaceholder extends StatelessWidget {
-  const _DetailPlaceholder({
-    required this.title,
-    required this.description,
-  });
+  const _DetailPlaceholder({required this.title, required this.description});
 
   final String title;
   final String description;
